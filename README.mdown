@@ -1,0 +1,40 @@
+# The Road Won't Rise to Meet You
+
+A small game about how hard it is all the time.
+
+
+## Goals
+
+To create a very small, simple game, in a small amount of time for the Experimental gameplay competition.
+
+To hint at a deeper idea underlying the simple gameplay and art.
+
+To have at least one fun mechanic that encourages some amount of replay beyond a single attempt.
+
+To have at least 5 levels created. This will probably take longer than expected.
+
+It would be interesting to implement this without text or numbers.
+
+## Gameplay
+
+The player controls a character who can run and jump on platforms. The levels are made up of solid boxes that float in the air. Over time, boxes become affected by gravity causing them to drop. Boxes can stack up, blocking passages. They can also drop out of the level completely creating pits.
+
+The player's goal is to move quickly and skillfully through each level to get to a goal without falling out of the level.
+
+The jumping physics should offer a lot of player control.
+
+
+## Art
+
+The art style should be very simple, possibly in a 4 color gameboy style. Tiles should be 16x16 or 32x32. The player sprite should be the same size.
+
+Required assets:
+
+- background tile
+- dormant block tile
+- active block tile
+- player standing sprite
+- player running sprite
+- player jumping sprite
+
+All player sprites should be facing right, they will be flipped in code.
