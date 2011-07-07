@@ -12,7 +12,7 @@ require 'controller_manager'
 require 'utility'
 
 Input = class('Input')
-function Input:Initialize()
+function Input:initialize()
   self.controller = ControllerManager()
   
   self.state = {
