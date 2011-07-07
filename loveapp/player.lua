@@ -189,8 +189,8 @@ function Player:draw()
   
   love.graphics.drawq(self.tileset,
                       self.animations[self.animation.current].quads[self.animation.frame], 
-                      self.position.x, 
-                      self.position.y,
+                      math.floor(self.position.x), 
+                      math.floor(self.position.y),
                       0,
                       self.scale * self.flip,
                       self.scale,
