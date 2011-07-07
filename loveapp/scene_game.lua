@@ -7,14 +7,20 @@
 -- 
 
 require 'logger'
+require 'level'
 require 'vector'
 require 'textfader'
+require 'colors'
 
 game = Gamestate.new()
 game.level = ''
 
 function game.enter(self, pre)
   self.log = Logger(vector(10, 10))
+  self.log.color = colors.black
+  
+  self.level = Level('test')
+  
 end
 
 function game.keypressed(self, key, unicode)
@@ -31,10 +37,13 @@ end
 
 function game.update(self, dt)
   self.log:update(dt)
-  self.log:addLine('Running...')
+  self.log:addLine(string.format('Level: %s', self.level.name))
+  
+  self.level:update(dt)
 end
 
 function game.draw(self)
+  self.level:draw()
   self.log:draw()
 end
 

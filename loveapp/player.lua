@@ -1,0 +1,7 @@
+-- 
+--  player.lua
+--  The-Road
+--  
+--  Created by Jay Roberts on 2011-07-06.
+--  Copyright 2011 GloryFish.org. All rights reserved.
+-- 
