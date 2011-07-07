@@ -8,6 +8,7 @@
 
 require 'logger'
 require 'level'
+require 'player'
 require 'vector'
 require 'textfader'
 require 'colors'
@@ -21,6 +22,7 @@ function game.enter(self, pre)
   
   self.level = Level('test')
   
+  self.player = Player(self.level.playerStart)
 end
 
 function game.keypressed(self, key, unicode)
@@ -40,10 +42,13 @@ function game.update(self, dt)
   self.log:addLine(string.format('Level: %s', self.level.name))
   
   self.level:update(dt)
+  self.player:update(dt)
 end
 
 function game.draw(self)
   self.level:draw()
+  self.player:draw()
+  
   self.log:draw()
 end
 
