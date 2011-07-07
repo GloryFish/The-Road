@@ -21,11 +21,18 @@ function game.enter(self, pre)
   self.log = Logger(vector(10, 10))
   self.log.color = colors.black
   
-  self.camera = Camera()
-  
   self.level = Level('test')
-  
   self.player = Player(self.level.playerStart)
+
+  self.camera = Camera()
+  self.camera.bounds = {
+    top = 0,
+    right = math.max(self.level:getWidth(), love.graphics.getWidth()),
+    bottom = math.max(self.level:getHeight(), love.graphics.getHeight()),
+    left = 0
+  }
+  self.camera.position = self.player.position
+  self.camera:update(0)
 end
 
 function game.keypressed(self, key, unicode)
@@ -153,13 +160,23 @@ function game.update(self, dt)
   -- Here we update the player, the final velocity will be applied here
   self.player:update(dt)
 
+  self.camera.focus = self.player.position
+  self.camera:update(dt)
   
 end
 
 function game.draw(self)
+  love.graphics.push()
+
+  -- Game
+  love.graphics.translate(-self.camera.offset.x, -self.camera.offset.y)
   self.level:draw()
   self.player:draw()
+
+  love.graphics.pop()
   
+  love.graphics.translate(0, 0)  
+
   if debug then
     self.log:draw()
   end

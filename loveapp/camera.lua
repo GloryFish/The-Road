@@ -52,6 +52,6 @@ function Camera:update(dt)
   end
   
   -- Update the offset
-  self.offset = vector(math.floor(camera.position.x - love.graphics.getWidth() / 2), 
-                       math.floor(camera.position.y - love.graphics.getHeight() / 2))
+  self.offset = vector(math.floor(self.position.x - love.graphics.getWidth() / 2), 
+                       math.floor(self.position.y - love.graphics.getHeight() / 2))
 end
