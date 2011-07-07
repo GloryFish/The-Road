@@ -126,11 +126,15 @@ function Level:pointIsWalkable(point)
   local tilePoint = self:toTileCoords(point)
   tilePoint = tilePoint + vector(1, 1)
   
+  -- Check static tiles for collision
   if self.tiles[tilePoint.x] ~= nil then
-    return not table.contains(self.solid, self.tiles[tilePoint.x][tilePoint.y])
+    if table.contains(self.solid, self.tiles[tilePoint.x][tilePoint.y]) then
+      return false
+    end
   end
-  
-  return true
+
+  -- Check active blocks for collision
+  return self.blockManager:pointIsWalkable(point) 
 end
 
 function Level:tilePointIsWalkable(tilePoint)

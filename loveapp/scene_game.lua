@@ -70,7 +70,6 @@ function game.update(self, dt)
       end
     end
   
-  
     self.log:addLine(string.format('World: %i, %i', mouse.x, mouse.y))
     self.log:addLine(string.format('Tile: %i, %i, %s', tile.x, tile.y, tileString))
     if self.player.onground then

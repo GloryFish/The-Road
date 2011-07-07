@@ -12,12 +12,17 @@ require 'colors'
 require 'vector'
 
 Block = class('Block')
-function Block:initialize()
-  self.position = vector(0, 0)
+function Block:initialize(pos, size)
+  self.position = pos
+  self.size = size
 end
 
-
-
+function Block:containsPoint(point)
+  return point.x > self.position.x and
+     point.x < self.position.x + self.size and
+     point.y > self.position.y and
+     point.y < self.position.y + self.size
+end
 
 BlockManager = class('BlockManager')
 function BlockManager:initialize(level)
@@ -27,8 +32,7 @@ function BlockManager:initialize(level)
 end
 
 function BlockManager:addBlock(pos)
-  local newBlock = Block()
-  newBlock.position = pos
+  local newBlock = Block(pos, self.blockSize)
   
   table.insert(self.blocks, newBlock)  
 end
@@ -40,5 +44,13 @@ function BlockManager:draw()
   colors.red:set()
   for i, block in ipairs(self.blocks) do
     love.graphics.rectangle('fill', block.position.x, block.position.y, self.blockSize, self.blockSize)
+  end
+end
+
+function BlockManager:pointIsWalkable(point)
+  for i, block in ipairs(self.blocks) do
+    if block:containsPoint(point) then
+      return false
+    end
   end
 end
