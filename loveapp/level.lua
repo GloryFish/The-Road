@@ -9,6 +9,7 @@
 require 'middleclass'
 require 'vector'
 require 'tableextras'
+require 'block_manager'
 
 Level = class('Level')
 function Level:initialize(name)
@@ -55,6 +56,24 @@ function Level:initialize(name)
     end
     y = y + 1
   end
+  
+  self.blockManager = BlockManager()
+  self.blockManager.blockSize = self.tileSize
+  self.blockManager.scale = self.scale
+end
+
+function Level:activateBlockAtWorldCoords(point)
+  local tilePoint = self:toTileCoords(point) + vector(1, 1)
+  
+  if self.tiles[tilePoint.x] ~= nil then
+    if self.tiles[tilePoint.x][tilePoint.y] == '#' then
+      self.tiles[tilePoint.x][tilePoint.y] = ' '
+
+      -- Get the world coordinates of the upper left coordinate of the selected tile
+      local worldPoint = self:toWorldCoords(tilePoint)
+      self.blockManager:addBlock(worldPoint)  
+    end
+  end
 end
 
 function Level:setPlayerStart(x, y)
@@ -74,6 +93,7 @@ function Level:setPlayerStart(x, y)
 end
 
 function Level:update(dt)
+  self.blockManager:update(dt)
 end
 
 
@@ -90,6 +110,8 @@ function Level:draw()
                           self.scale)
     end
   end
+  
+  self.blockManager:draw()
 end
 
 function Level:getWidth()
