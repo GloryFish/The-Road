@@ -8,6 +8,7 @@
 
 require 'logger'
 require 'level'
+require 'camera'
 require 'player'
 require 'vector'
 require 'textfader'
@@ -19,6 +20,8 @@ game.level = ''
 function game.enter(self, pre)
   self.log = Logger(vector(10, 10))
   self.log.color = colors.black
+  
+  self.camera = Camera()
   
   self.level = Level('test')
   
@@ -38,8 +41,41 @@ function game.mousereleased(self, x, y, button)
 end
 
 function game.update(self, dt)
-  self.log:update(dt)
-  self.log:addLine(string.format('Level: %s', self.level.name))
+  if debug then
+    self.log:update(dt)
+
+    self.log:addLine(string.format('Level: %s', self.level.name))
+
+    local mouse = vector(love.mouse.getX(), love.mouse.getY()) + self.camera.offset
+    local tile = self.level:toTileCoords(mouse)
+    local tileString = 'air'
+
+    tile = tile + vector(1, 1)
+  
+    if self.level.tiles[tile.x] then
+      tileString = self.level.tiles[tile.x][tile.y]
+  
+      if tileString == nil or tileString == ' ' then
+        tileString = 'air'
+      end
+    end
+  
+  
+    self.log:addLine(string.format('World: %i, %i', mouse.x, mouse.y))
+    self.log:addLine(string.format('Tile: %i, %i, %s', tile.x, tile.y, tileString))
+    if self.player.onground then
+      self.log:addLine(string.format('State: %s', 'On Ground'))
+    else
+      self.log:addLine(string.format('State: %s', 'Jumping'))
+    end
+    self.log:addLine(string.format('Width: %i Height: %i', self.level:getWidth(), self.level:getHeight()))
+
+    if (self.level:pointIsWalkable(mouse)) then
+      self.log:addLine(string.format('Walkable'))
+    else
+      self.log:addLine(string.format('Wall'))
+    end
+  end
   
   self.level:update(dt)
   self.player:update(dt)
@@ -49,7 +85,9 @@ function game.draw(self)
   self.level:draw()
   self.player:draw()
   
-  self.log:draw()
+  if debug then
+    self.log:draw()
+  end
 end
 
 function game.quit(self)

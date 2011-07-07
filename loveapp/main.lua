@@ -11,11 +11,11 @@ require 'middleclass-extras'
 
 require 'gamestate'
 require 'scene_game'
+require 'input'
 require 'logger'
 
 function love.load()
   debug = true
-  
   
   love.graphics.setCaption('Desert Loot')
 
@@ -38,6 +38,8 @@ function love.load()
   sounds = {
     menuselect = love.audio.newSource('resources/sounds/select.mp3', 'static')
   }
+  
+  input = Input()
   
   Gamestate.registerEvents()
   Gamestate.switch(game)
