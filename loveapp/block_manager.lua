@@ -108,3 +108,14 @@ function BlockManager:pointIsWalkable(point)
   end
   return true
 end
+
+function BlockManager:pointIsLethal(point)
+  for i, block in ipairs(self.blocks) do
+    if block.velocity.y > 0 then
+      if block:containsPoint(point) then
+        return true
+      end
+    end
+  end
+  return false
+end

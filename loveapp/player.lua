@@ -31,7 +31,7 @@ function Player:initialize(pos)
   
   self.animations['standing'] = {}
   self.animations['standing'].quads = {
-    love.graphics.newQuad(2 * self.tileSize, 0, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
+    love.graphics.newQuad(2 * self.tileSize, 0 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
   }
   
   self.animations['jumping'] = {}
@@ -44,6 +44,11 @@ function Player:initialize(pos)
     love.graphics.newQuad(2 * self.tileSize, 0 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
   }
   
+  self.animations['dead'] = {}
+  self.animations['dead'].quads = {
+    love.graphics.newQuad(2 * self.tileSize, 1 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
+  }
+
   self.animation = {}
   self.animation.current = 'standing'
   self.animation.frame = 1
@@ -55,9 +60,9 @@ function Player:initialize(pos)
   self.speed = 100
   self.onground = true
   self.onwall = false
-  self.state = 'standing'
   self.movement = vector(0, 0) -- This holds a vector containing the last movement input recieved
-
+  self.dead = false
+  
   self.velocity = vector(0, 0)
   self.jumpVector = vector(0, -250)
 end
@@ -68,6 +73,7 @@ function Player:reset()
   self.animation.elapsed = 0
   self.flip = 1
   self.velocity = vector(0, 0)
+  self.dead = false
 end
 
 -- Call during update with the joystick vector
@@ -90,6 +96,11 @@ function Player:setMovement(movement)
       self:setAnimation('walking')
     end    
   end
+end
+
+function Player:kill()
+  self.dead = true
+  self:setAnimation('dead')
 end
 
 -- Adjusts the player's y position so that it is standing on the floor value

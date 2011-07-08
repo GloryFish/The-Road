@@ -141,6 +141,10 @@ function Level:pointIsWalkable(point)
   return self.blockManager:pointIsWalkable(point) 
 end
 
+function Level:pointIsLethal(point)
+  return self.blockManager:pointIsLethal(point) 
+end
+
 function Level:tilePointIsWalkable(tilePoint)
   tilePoint = tilePoint + vector(1, 1)
   
