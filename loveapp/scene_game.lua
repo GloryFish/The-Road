@@ -15,13 +15,15 @@ require 'textfader'
 require 'colors'
 
 game = Gamestate.new()
-game.level = ''
+game.level = nil
 
 function game.enter(self, pre)
   self.log = Logger(vector(10, 10))
   self.log.color = colors.black
   
-  self.level = Level('level-1')
+  if self.level == nil then
+    self.level = Level('level-1')
+  end
   self.player = Player(self.level.playerStart)
 
   self.camera = Camera()

@@ -10,6 +10,7 @@ require 'middleclass'
 require 'middleclass-extras'
 
 require 'gamestate'
+require 'level'
 require 'scene_game'
 require 'input'
 require 'logger'
@@ -40,6 +41,10 @@ function love.load()
   }
   
   input = Input()
+  
+  if debug then
+    game.level = Level('test')
+  end
   
   Gamestate.registerEvents()
   Gamestate.switch(game)
