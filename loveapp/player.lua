@@ -57,12 +57,7 @@ function Player:initialize(pos)
   self.onwall = false
   self.state = 'standing'
   self.movement = vector(0, 0) -- This holds a vector containing the last movement input recieved
-  self.resolve = 1
 
-  self.bursting = false
-  self.burstInterval = 3
-  self.burstDuration = 0
-  
   self.velocity = vector(0, 0)
   self.jumpVector = vector(0, -250)
 end
@@ -113,15 +108,6 @@ function Player:land()
   love.audio.play(self.sounds.land)
 end
 
-function Player:burst()
-  if not self.bursting then
-    self.bursting = true
-    self.burstDuration = 0
-    self.resolve = self.resolve - 0.15
-  end
-    
-end
-
 -- TODO: Fix state code, make sure proper state transitions are maintained
 -- make sure there is running, jumping, falling with correct changing between them
 function Player:setAnimation(animation)
@@ -157,14 +143,6 @@ end
 
 function Player:update(dt)
   self.animation.elapsed = self.animation.elapsed + dt
-  
-  if self.bursting then
-    self.burstDuration = self.burstDuration + dt
-    if self.burstDuration > self.burstInterval then
-      self.burstDuration = 0
-      self.bursting = false
-    end
-  end
   
   -- Handle animation
   if #self.animations[self.animation.current].quads > 1 then -- More than one frame
