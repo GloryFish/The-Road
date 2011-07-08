@@ -21,7 +21,7 @@ function game.enter(self, pre)
   self.log = Logger(vector(10, 10))
   self.log.color = colors.black
   
-  self.level = Level('test')
+  self.level = Level('level-1')
   self.player = Player(self.level.playerStart)
 
   self.camera = Camera()
