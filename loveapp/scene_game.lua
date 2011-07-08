@@ -42,9 +42,10 @@ function game.keypressed(self, key, unicode)
 end
 
 function game.mousepressed(self, x, y, button)
-  local mouseWorldPoint = vector(x, y) + self.camera.offset
-
-  self.level:activateBlockAtWorldCoords(mouseWorldPoint)
+  if debug then
+    local mouseWorldPoint = vector(x, y) + self.camera.offset
+    self.level:activateBlockAtWorldCoords(mouseWorldPoint)
+  end
 end
 
 function game.mousereleased(self, x, y, button)
