@@ -44,6 +44,7 @@ function BlockManager:initialize(level)
   self.blockSize = 16
   self.scale = 1
   self.level = level
+  self.bounds = vector(self.level:getWidth(), self.level:getHeight()) -- World bounds are (0, 0, width, height)
 end
 
 function BlockManager:addBlock(pos)
@@ -54,6 +55,8 @@ end
 
 function BlockManager:update(dt)
   local gravityAmount = 1
+  
+  local toRemove = {} -- Blocks we might want to remove because they are out of the world bounds
   
   for i, block in ipairs(self.blocks) do
     block.velocity = block.velocity + self.level.gravity * dt * gravityAmount -- Gravity
@@ -73,8 +76,16 @@ function BlockManager:update(dt)
       end
     end
 
-    -- Here we update the player, the final velocity will be applied here
     block.position = block.position + block.velocity * dt
+    
+    -- If the block is outside of the world bounds, destroy it
+    if block.position.y > self.bounds.y then 
+      table.insert(toRemove, i)
+    end
+  end
+  
+  for i, v in ipairs(toRemove) do
+     table.remove(self.blocks, v - i + 1)
   end
 end
 

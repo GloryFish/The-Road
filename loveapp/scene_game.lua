@@ -87,6 +87,8 @@ function game.update(self, dt)
     else
       self.log:addLine(string.format('Wall'))
     end
+
+    self.log:addLine(string.format('Active: %i', #self.level.blockManager.blocks))
     
     self.log:addLine(string.format('Player velocity: %s', tostring(self.player.velocity)))
 
