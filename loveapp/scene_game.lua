@@ -119,76 +119,77 @@ function game.update(self, dt)
       if self.player.onground then
         self.player:jump()
       end
+    end 
+  end
+  
+  -- Apply gravity
+  local gravityAmount = 1
+
+  if input.state.buttons.jump and self.player.velocity.y < 0 and not self.player.dead then
+    gravityAmount = 0.5
+  end
+
+  self.player.velocity = self.player.velocity + self.level.gravity * dt * gravityAmount -- Gravity
+
+  if dt > 0.5 then
+    self.player.velocity.y = 0
+  end
+
+  local newPos = self.player.position + self.player.velocity * dt
+  local curUL, curUR, curBL, curBR = self.player:getCorners()
+  local newUL, newUR, newBL, newBR = self.player:getCorners(newPos)
+
+  if self.player.velocity.y > 0 then -- Falling
+    local testBL = vector(curBL.x, newBL.y)
+    local testBR = vector(curBR.x, newBR.y)
+
+    if self.level:pointIsWalkable(testBL) == false or self.level:pointIsWalkable(testBR) == false then -- Collide with bottom
+      self.player:setFloorPosition(self.level:floorPosition(testBL))
+      self.player.velocity.y = 0
+      self.player.onground = true
     end
+  end
 
-    -- Apply gravity
-    local gravityAmount = 1
+  -- We are going to use these upper coordinates in two separate checks
+  local testUL = vector(curUL.x, newUL.y)
+  local testUR = vector(curUR.x, newUR.y)
 
-    if input.state.buttons.jump and self.player.velocity.y < 0 then
-      gravityAmount = 0.5
-    end
+  if self.level:pointIsLethal(testUL) or self.level:pointIsLethal(testUR) then -- Kill player
+    self.player:kill()
+  end
 
-    self.player.velocity = self.player.velocity + self.level.gravity * dt * gravityAmount -- Gravity
+  -- If we survived that, then we can check for a jumping collision against somethign that's non-walkable
+  if self.player.velocity.y < 0 then -- Jumping
 
-    if dt > 0.5 then
+    if self.level:pointIsWalkable(testUL) == false or self.level:pointIsWalkable(testUR) == false then -- Collide with top
       self.player.velocity.y = 0
     end
+  end
 
-    local newPos = self.player.position + self.player.velocity * dt
-    local curUL, curUR, curBL, curBR = self.player:getCorners()
-    local newUL, newUR, newBL, newBR = self.player:getCorners(newPos)
+  newPos = self.player.position + self.player.velocity * dt
+  curUL, curUR, curBL, curBR = self.player:getCorners()
+  newUL, newUR, newBL, newBR = self.player:getCorners(newPos)
 
-    if self.player.velocity.y > 0 then -- Falling
-      local testBL = vector(curBL.x, newBL.y)
-      local testBR = vector(curBR.x, newBR.y)
+  if self.player.velocity.x > 0 then -- Collide with right side
+    local testUR = vector(newUR.x, curUR.y)
+    local testBR = vector(newBR.x, curBR.y - 1)
 
-      if self.level:pointIsWalkable(testBL) == false or self.level:pointIsWalkable(testBR) == false then -- Collide with bottom
-        self.player:setFloorPosition(self.level:floorPosition(testBL))
-        self.player.velocity.y = 0
-        self.player.onground = true
-      end
+    if self.level:pointIsWalkable(testUR) == false or self.level:pointIsWalkable(testBR) == false then
+      self.player.velocity.x = 0
     end
+  end
 
-    -- We are going to use these upper coordinates in two separate checks
-    local testUL = vector(curUL.x, newUL.y)
-    local testUR = vector(curUR.x, newUR.y)
+  if self.player.velocity.x < 0 then -- Collide with left side
+    local testUL = vector(newUL.x, curUL.y)
+    local testBL = vector(newBL.x, curBL.y - 1)
 
-    if self.level:pointIsLethal(testUL) or self.level:pointIsLethal(testUR) then -- Kill player
-      self.player:kill()
+    if self.level:pointIsWalkable(testUL) == false or self.level:pointIsWalkable(testBL) == false then
+      self.player.velocity.x = 0
     end
+  end
 
-    -- If we survived that, then we can check for a jumping collision against somethign that's non-walkable
-    if self.player.velocity.y < 0 then -- Jumping
-
-      if self.level:pointIsWalkable(testUL) == false or self.level:pointIsWalkable(testUR) == false then -- Collide with top
-        self.player.velocity.y = 0
-      end
-    end
-
-    newPos = self.player.position + self.player.velocity * dt
-    curUL, curUR, curBL, curBR = self.player:getCorners()
-    newUL, newUR, newBL, newBR = self.player:getCorners(newPos)
-
-    if self.player.velocity.x > 0 then -- Collide with right side
-      local testUR = vector(newUR.x, curUR.y)
-      local testBR = vector(newBR.x, curBR.y - 1)
-
-      if self.level:pointIsWalkable(testUR) == false or self.level:pointIsWalkable(testBR) == false then
-        self.player.velocity.x = 0
-      end
-    end
-
-    if self.player.velocity.x < 0 then -- Collide with left side
-      local testUL = vector(newUL.x, curUL.y)
-      local testBL = vector(newBL.x, curBL.y - 1)
-
-      if self.level:pointIsWalkable(testUL) == false or self.level:pointIsWalkable(testBL) == false then
-        self.player.velocity.x = 0
-      end
-    end
-
-    -- Here we update the player, the final velocity will be applied here
-    self.player:update(dt)  end
+  -- Here we update the player, the final velocity will be applied here
+  self.player:update(dt)
 
   self.camera.focus = self.player.position
   self.camera:update(dt)
