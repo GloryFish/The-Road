@@ -58,20 +58,20 @@ function BlockManager:update(dt)
   for i, block in ipairs(self.blocks) do
     block.velocity = block.velocity + self.level.gravity * dt * gravityAmount -- Gravity
 
-    -- if dt > 0.5 then
-    --   self.player.velocity.y = 0
-    -- end
-    -- 
-    -- local newPos = block.position + block.velocity * dt
-    -- 
-    -- local blockBottomPos = block:getBottomCenter(newPos)
-    -- 
-    -- if block.velocity.y > 0 then -- Falling
-    --   if not self.level:pointIsWalkable(blockBottomPos) then -- Collide with bottom
-    --     block:setFloorPosition(self.level:floorPosition(blockBottomPos))
-    --     block.velocity.y = 0
-    --   end
-    -- end
+    if dt > 0.5 then
+      self.player.velocity.y = 0
+    end
+    
+    local newPos = block.position + block.velocity * dt
+    
+    local blockBottomPos = block:getBottomCenter(newPos)
+    
+    if block.velocity.y > 0 then -- Falling
+      if not self.level:pointIsWalkable(blockBottomPos) then -- Collide with bottom
+        block:setFloorPosition(self.level:floorPosition(blockBottomPos))
+        block.velocity.y = 0
+      end
+    end
 
     -- Here we update the player, the final velocity will be applied here
     block.position = block.position + block.velocity * dt
