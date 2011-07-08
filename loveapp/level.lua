@@ -57,7 +57,7 @@ function Level:initialize(name)
     y = y + 1
   end
   
-  self.blockManager = BlockManager()
+  self.blockManager = BlockManager(self)
   self.blockManager.blockSize = self.tileSize
   self.blockManager.scale = self.scale
 end
@@ -66,7 +66,7 @@ function Level:activateBlockAtWorldCoords(point)
   local tilePoint = self:toTileCoords(point) + vector(1, 1)
   
   if self.tiles[tilePoint.x] ~= nil then
-    if self.tiles[tilePoint.x][tilePoint.y] == '#' then
+    if table.contains(self.solid, self.tiles[tilePoint.x][tilePoint.y]) then
       self.tiles[tilePoint.x][tilePoint.y] = ' '
 
       -- Get the world coordinates of the upper left coordinate of the selected tile
