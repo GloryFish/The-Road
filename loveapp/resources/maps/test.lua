@@ -63,4 +63,4 @@ ______________________________________________
 
 local gravity = vector(0, 600)
 
-return tileset, quads, tileString, tileWidth, gravity, solid
+return tileset, quads, tileString, tileWidth, gravity, solid, 'level-1'

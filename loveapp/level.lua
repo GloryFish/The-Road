@@ -21,7 +21,7 @@ function Level:initialize(name)
   -- a set of quads for each image in the tileset indexed by
   -- an ascii character, a string representing the initial level layout,
   -- and the size of each tile in the tileset.
-  self.tileset, self.quads, self.tileString, self.tileSize, self.gravity, self.solid = love.filesystem.load(string.format('resources/maps/%s.lua', name))()
+  self.tileset, self.quads, self.tileString, self.tileSize, self.gravity, self.solid, self.nextLevelName = love.filesystem.load(string.format('resources/maps/%s.lua', name))()
 
   -- Now we build an array of characters from the tileString
   self.tiles = {}
@@ -83,7 +83,7 @@ function Level:setPlayerStart(x, y)
 end
 
 function Level:setGoal(x, y)
-  self.goal = vector(x, y)
+  self.goal = self:toWorldCoordsCenter(vector(x - 1, y - 1))
 end
 
 function Level:setPlayerStart(x, y)
@@ -145,6 +145,10 @@ function Level:tilePointIsWalkable(tilePoint)
   end
   
   return true
+end
+
+function Level:pointIsAtGoal(point)
+  return point:dist(self.goal) < (self.tileSize * self.scale)
 end
 
 -- This function takes a world point returns the Y position of the top edge of the matching tile in world space

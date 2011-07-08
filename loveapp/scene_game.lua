@@ -87,6 +87,12 @@ function game.update(self, dt)
     end
     
     self.log:addLine(string.format('Player velocity: %s', tostring(self.player.velocity)))
+
+    self.log:addLine(string.format('Goal: %f', self.player.position:dist(self.level.goal)))
+    
+    if self.level:pointIsAtGoal(self.player.position) then
+      self.log:addLine('GOAL!!!!!!')
+    end
   end
   
   input:update(dt)
