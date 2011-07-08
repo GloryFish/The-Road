@@ -48,7 +48,7 @@ function game.keypressed(self, key, unicode)
     self:quit()
   end
   
-  if key == 'r' then
+  if debug and key == 'r' then
     self:reset()
   end
 end
