@@ -154,7 +154,7 @@ function game.update(self, dt)
   local testUL = vector(curUL.x, newUL.y)
   local testUR = vector(curUR.x, newUR.y)
 
-  if self.level:pointIsLethal(testUL) or self.level:pointIsLethal(testUR) then -- Kill player
+  if not self.player.dead and self.level:pointIsLethal(testUL) or self.level:pointIsLethal(testUR) then -- Kill player
     self.player:kill()
   end
 
