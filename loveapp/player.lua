@@ -62,6 +62,14 @@ function Player:initialize(pos)
   self.jumpVector = vector(0, -250)
 end
 
+function Player:reset()
+  self.animation.current = 'standing'
+  self.animation.frame = 1
+  self.animation.elapsed = 0
+  self.flip = 1
+  self.velocity = vector(0, 0)
+end
+
 -- Call during update with the joystick vector
 function Player:setMovement(movement)
   self.movement = movement

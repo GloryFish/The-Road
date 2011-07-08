@@ -17,15 +17,20 @@ function Level:initialize(name)
   self.scale = 1
   self.name = name
   
-  -- Load a map file which will give us a tileset image, 
-  -- a set of quads for each image in the tileset indexed by
-  -- an ascii character, a string representing the initial level layout,
-  -- and the size of each tile in the tileset.
   self.tileset, self.quads, self.tileString, self.tileSize, self.gravity, self.solid, self.nextLevelName = love.filesystem.load(string.format('resources/maps/%s.lua', name))()
 
-  -- Now we build an array of characters from the tileString
-  self.tiles = {}
   self.enemyStarts = {}
+  self.pickupSpawns = {}
+
+  self:loadTiles()
+  
+  self.blockManager = BlockManager(self)
+  self.blockManager.blockSize = self.tileSize
+  self.blockManager.scale = self.scale
+end
+
+function Level:loadTiles()
+  self.tiles = {}
   
   local width = #(self.tileString:match("[^\n]+"))
 
@@ -34,8 +39,6 @@ function Level:initialize(name)
   end
 
   local x, y = 1, 1
-  
-  self.pickupSpawns = {}
 
   for row in self.tileString:gmatch("[^\n]+") do
     assert(#row == width, 'Map is not aligned: width of row ' .. tostring(y) .. ' should be ' .. tostring(width) .. ', but it is ' .. tostring(#row))
@@ -56,10 +59,11 @@ function Level:initialize(name)
     end
     y = y + 1
   end
-  
-  self.blockManager = BlockManager(self)
-  self.blockManager.blockSize = self.tileSize
-  self.blockManager.scale = self.scale
+end
+
+function Level:reset()
+  self:loadTiles()
+  self.blockManager:reset()
 end
 
 function Level:activateBlockAtWorldCoords(point)

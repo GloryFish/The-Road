@@ -47,6 +47,10 @@ function BlockManager:initialize(level)
   self.bounds = vector(self.level:getWidth(), self.level:getHeight()) -- World bounds are (0, 0, width, height)
 end
 
+function BlockManager:reset()
+  self.blocks = {}
+end
+
 function BlockManager:addBlock(pos)
   local newBlock = Block(pos, self.blockSize)
   

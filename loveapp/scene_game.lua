@@ -37,9 +37,19 @@ function game.enter(self, pre)
   self.camera:update(0)
 end
 
+function game.reset(self)
+  self.level:reset()
+  self.player:reset()
+  self.player.position = self.level.playerStart
+end
+
 function game.keypressed(self, key, unicode)
   if key == 'escape' then
     self:quit()
+  end
+  
+  if key == 'r' then
+    self:reset()
   end
 end
 
