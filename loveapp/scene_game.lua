@@ -99,7 +99,8 @@ function game.update(self, dt)
     end
 
     self.log:addLine(string.format('Active: %i', #self.level.blockManager.blocks))
-    
+
+    self.log:addLine(string.format('Player animation: %s', self.player.animation.current))
     self.log:addLine(string.format('Player velocity: %s', tostring(self.player.velocity)))
 
     self.log:addLine(string.format('Goal: %f', self.player.position:dist(self.level.goal)))
@@ -190,6 +191,12 @@ function game.update(self, dt)
 
   -- Here we update the player, the final velocity will be applied here
   self.player:update(dt)
+
+  -- Check to see if player ha sfallen beow the bounds
+  if self.player.position.y > self.level:getHeight() then
+    self.player:kill()
+  end
+
 
   self.camera.focus = self.player.position
   self.camera:update(dt)
