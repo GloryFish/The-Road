@@ -42,6 +42,7 @@ function game.reset(self)
   self.level:reset()
   self.player:reset()
   self.player.position = self.level.playerStart
+  self.camera.position = self.level.playerStart
   self.goalReached = false
 end
 
@@ -221,7 +222,9 @@ function game.update(self, dt)
     self.level:dropGoal()
   end
 
-  self.camera.focus = self.player.position
+  if not self.goalReached then
+    self.camera.focus = self.player.position
+  end
   self.camera:update(dt)
   
 end
