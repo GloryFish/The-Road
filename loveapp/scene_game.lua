@@ -33,7 +33,7 @@ function game.enter(self, pre)
     bottom = math.max(self.level:getHeight(), love.graphics.getHeight()),
     left = 0
   }
-  self.camera.position = self.player.position
+  self.camera.position = self.player.position:clone()
   self.camera:update(0)
   self.goalReached = false
 end
@@ -41,8 +41,14 @@ end
 function game.reset(self)
   self.level:reset()
   self.player:reset()
-  self.player.position = self.level.playerStart
-  self.camera.position = self.level.playerStart
+  self.player.position = self.level.playerStart:clone()
+  self.camera.position = self.level.playerStart:clone()
+  self.camera.bounds = {
+    top = 0,
+    right = self.level:getWidth(),
+    bottom = self.level:getHeight(),
+    left = 0
+  }
   self.goalReached = false
 end
 

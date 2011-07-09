@@ -8,6 +8,7 @@
 
 
 require 'vector'
+require 'trigger_builder'
 
 local tileset = love.graphics.newImage('resources/images/spritesheet.png')
 tileset:setFilter('nearest', 'nearest')
@@ -49,8 +50,8 @@ local tileString = [[
 ###################   #####   #####   ###   #############
 ###################   #####   #####   ###   #############
 #########################################################
-##############_______________________________############
-##############] S                           [############
+##############]      S                      [############
+##############]      #                      [############
 ##############]                             [############
 ##############]                             [############
 ##############]                             [############
@@ -67,6 +68,13 @@ local tileString = [[
 #                                                       #
 ]]
 
+local triggers = {}
+
+local tb = TriggerBuilder()
+tb:row(triggers, 15, 39, 19, 3, 1)
+tb:row(triggers, 15, 39, 18, 8, 1)
+
+
 local gravity = vector(0, 600)
 
-return tileset, quads, tileString, tileWidth, gravity, solid, 'level-2'
+return tileset, quads, tileString, tileWidth, gravity, solid, triggers, 'level-2'

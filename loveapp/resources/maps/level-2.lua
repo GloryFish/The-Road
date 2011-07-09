@@ -70,6 +70,8 @@ local tileString = [[
 #                                                       #
 ]]
 
+local triggers = {}
+
 local gravity = vector(0, 600)
 
-return tileset, quads, tileString, tileWidth, gravity, solid, 'level-3'
+return tileset, quads, tileString, tileWidth, gravity, solid, triggers, 'level-3'

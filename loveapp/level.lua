@@ -17,12 +17,13 @@ function Level:initialize(name)
   self.scale = 1
   self.name = name
   
-  self.tileset, self.quads, self.tileString, self.tileSize, self.gravity, self.solid, self.nextLevelName = love.filesystem.load(string.format('resources/maps/%s.lua', name))()
+  self.tileset, self.quads, self.tileString, self.tileSize, self.gravity, self.solid, self.triggers, self.nextLevelName = love.filesystem.load(string.format('resources/maps/%s.lua', name))()
 
   self.enemyStarts = {}
   self.pickupSpawns = {}
 
   self:loadTiles()
+  self:loadTriggers()
   
   self.blockManager = BlockManager(self)
   self.blockManager.blockSize = self.tileSize
@@ -58,6 +59,13 @@ function Level:loadTiles()
       x = x + 1
     end
     y = y + 1
+  end
+end
+
+function Level:loadTriggers()
+  self.timer = require 'timer'
+  for i, trigger in ipairs(self.triggers) do
+    self.timer.add(trigger.time + math.random(), function() self:activateBlockAtTileCoords(trigger.position) end)
   end
 end
 
@@ -113,6 +121,7 @@ end
 
 function Level:update(dt)
   self.blockManager:update(dt)
+  self.timer.update(dt)
 end
 
 
