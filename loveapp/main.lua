@@ -18,8 +18,8 @@ require 'logger'
 function love.load()
   debug = true
   
-  love.graphics.setCaption('Desert Loot')
-
+  love.graphics.setCaption('The Road')
+  
   -- Seed random
   local seed = os.time()
   math.randomseed(seed);
