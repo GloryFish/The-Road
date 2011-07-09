@@ -67,7 +67,12 @@ function Level:reset()
 end
 
 function Level:activateBlockAtWorldCoords(point)
-  local tilePoint = self:toTileCoords(point) + vector(1, 1)
+  local tilePoint = self:toTileCoords(point)
+  self:activateBlockAtTileCoords(tilePoint)
+end
+
+function Level:activateBlockAtTileCoords(point)
+  local tilePoint = point + vector(1, 1)
   
   if self.tiles[tilePoint.x] ~= nil then
     if table.contains(self.solid, self.tiles[tilePoint.x][tilePoint.y]) then
@@ -76,6 +81,16 @@ function Level:activateBlockAtWorldCoords(point)
       -- Get the world coordinates of the upper left coordinate of the selected tile
       local worldPoint = self:toWorldCoords(tilePoint)
       self.blockManager:addBlock(worldPoint)  
+    end
+  end
+end
+
+function Level:dropGoal()
+  local tileGoal = self:toTileCoords(self.goal)
+  
+  for x = tileGoal.x - 1, tileGoal.x + 1, 1 do
+    for y = tileGoal.y + 1, self:getHeight(), 1 do
+      self:activateBlockAtTileCoords(vector(x, y))
     end
   end
 end

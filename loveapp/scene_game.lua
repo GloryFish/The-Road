@@ -35,12 +35,14 @@ function game.enter(self, pre)
   }
   self.camera.position = self.player.position
   self.camera:update(0)
+  self.goalReached = false
 end
 
 function game.reset(self)
   self.level:reset()
   self.player:reset()
   self.player.position = self.level.playerStart
+  self.goalReached = false
 end
 
 function game.keypressed(self, key, unicode)
@@ -56,7 +58,13 @@ end
 function game.mousepressed(self, x, y, button)
   if debug then
     local mouseWorldPoint = vector(x, y) + self.camera.offset
-    self.level:activateBlockAtWorldCoords(mouseWorldPoint)
+    
+    if button == 'l' then
+      self.level:activateBlockAtWorldCoords(mouseWorldPoint)
+    end
+    if button == 'r' then
+      self.level:dropGoal()
+    end
   end
 end
 
@@ -105,7 +113,7 @@ function game.update(self, dt)
 
     self.log:addLine(string.format('Goal: %f', self.player.position:dist(self.level.goal)))
     
-    if self.level:pointIsAtGoal(self.player.position) then
+    if self.goalReached then
       self.log:addLine('GOAL!!!!!!')
     end
   end
@@ -113,7 +121,7 @@ function game.update(self, dt)
   input:update(dt)
   self.level:update(dt)
   
-  if not self.player.dead then
+  if not self.player.dead and not self.goalReached then
     self.player:setMovement(input.state.movement)
 
     if input.state.buttons.newpress.jump then
@@ -189,14 +197,29 @@ function game.update(self, dt)
     end
   end
 
+  -- If we've reached the goal, dampen horizontal movement
+  if self.goalReached then
+    self.player.velocity.x = self.player.velocity.x * 0.9
+  end
+
   -- Here we update the player, the final velocity will be applied here
   self.player:update(dt)
 
-  -- Check to see if player ha sfallen beow the bounds
+  -- Check to see if player has fallen below the bounds
   if self.player.position.y > self.level:getHeight() then
-    self.player:kill()
+    if self.goalReached then -- Next level!
+      -- Next level
+      self.level = Level(self.level.nextLevelName)
+      self:reset()
+    else -- Player so dead
+      self.player:kill()
+    end
   end
 
+  if self.level:pointIsAtGoal(self.player.position) then
+    self.goalReached = true
+    self.level:dropGoal()
+  end
 
   self.camera.focus = self.player.position
   self.camera:update(dt)
