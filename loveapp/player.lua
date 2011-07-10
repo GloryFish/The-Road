@@ -177,6 +177,11 @@ function Player:update(dt)
     end
   end
   
+  -- Cap velocity
+  if self.velocity.y > 500 then
+    self.velocity.y = 500
+  end
+  
   -- Apply velocity to position
   self.position = self.position + self.velocity * dt
 end
