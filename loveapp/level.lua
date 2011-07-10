@@ -28,6 +28,8 @@ function Level:initialize(name)
   self.blockManager = BlockManager(self)
   self.blockManager.blockSize = self.tileSize
   self.blockManager.scale = self.scale
+  self.blockManager.tileset = self.tileset
+  self.blockManager.quads = self.quads
 end
 
 function Level:loadTiles()

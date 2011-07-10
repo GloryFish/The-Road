@@ -17,12 +17,13 @@ tileset:setFilter('nearest', 'nearest')
 local tileWidth, tileHeight = 32, 32
 
 local quadInfo = { 
-  { ' ', 1 * tileWidth, 0 * tileHeight}, -- 1 = air 
-  { '#', 0 * tileWidth, 0 * tileHeight}, -- 2 = brick floor
-  { ']', 0 * tileWidth, 0 * tileHeight}, -- 3 = brick wall left
-  { '[', 0 * tileWidth, 0 * tileHeight}, -- 4 = brick wall right
-  { '_', 0 * tileWidth, 0 * tileHeight}, -- 5 = brick ceiling
-  { 'G', 3 * tileWidth, 0 * tileHeight}, -- 6 = goal
+  { ' ', 0 * tileWidth, 3 * tileHeight}, -- 1 = air 
+  { '#', 1 * tileWidth, 0 * tileHeight}, -- 2 = brick floor
+  { ']', 1 * tileWidth, 0 * tileHeight}, -- 3 = brick wall left
+  { '[', 1 * tileWidth, 0 * tileHeight}, -- 4 = brick wall right
+  { '_', 1 * tileWidth, 0 * tileHeight}, -- 5 = brick ceiling
+  { 'G', 2 * tileWidth, 0 * tileHeight}, -- 6 = goal
+  { 'A', 1 * tileWidth, 2 * tileHeight}, -- 6 = active
 }
 
 local solid = {
@@ -46,25 +47,33 @@ local tileString = [[
 ##############################
 ##############################
 ##############################
-######S     G#################
+#                            #
+#                            #
+#    S                       #
+#                            #
+#                            #
+#                            #
+#                            #
+#       ########             #
+#                            #
+#                     G      #
 ##############################
 ##############################
-##############################
-##############################
-##############################
-##############################
-##############################
-##############################
-##############################
-##############################
-##############################
+#                            #
+#                            #
+#                            #
+#                            #
+#                            #
+#                            #
 ]]
 
 local triggers = {}
 
 local tb = TriggerBuilder()
-tb:row(triggers, 1, 20, 6, 2, 1)
+tb:row(triggers, 9, 15, 3, 4, 0.5)
+tb:row(triggers, 1, 23, 15, 2, 1)
+tb:row(triggers, 1, 23, 14, 8, 1)
 
 local gravity = vector(0, 600)
 
-return tileset, quads, tileString, tileWidth, gravity, solid, triggers, 'level-1'
+return tileset, quads, tileString, tileWidth, gravity, solid, triggers, 'test'

@@ -19,7 +19,7 @@ game.level = nil
 
 function game.enter(self, pre)
   self.log = Logger(vector(10, 10))
-  self.log.color = colors.black
+  self.log.color = colors.white
   
   if self.level == nil then
     self.level = Level('level-1')
@@ -123,6 +123,8 @@ function game.update(self, dt)
     if self.goalReached then
       self.log:addLine('GOAL!!!!!!')
     end
+    self.log:addLine(string.format('Press R to reset.'))
+
   end
   
   input:update(dt)

@@ -16,6 +16,8 @@ function Block:initialize(pos, size)
   self.position = pos
   self.size = size
   self.velocity = vector(0, 0)
+  -- self.tileset and self.quads should be set by the parent level
+  
 end
 
 function Block:containsPoint(point)
@@ -94,9 +96,14 @@ function BlockManager:update(dt)
 end
 
 function BlockManager:draw()
-  colors.red:set()
   for i, block in ipairs(self.blocks) do
-    love.graphics.rectangle('fill', block.position.x, block.position.y, self.blockSize, self.blockSize)
+    love.graphics.drawq(self.tileset,
+                        self.quads['A'], 
+                        block.position.x, 
+                        block.position.y, 
+                        0,
+                        self.scale,
+                        self.scale)
   end
 end
 
