@@ -14,6 +14,10 @@ require 'trigger_builder'
 local tileset = love.graphics.newImage('resources/images/spritesheet.png')
 tileset:setFilter('nearest', 'nearest')
 
+local background = love.graphics.newImage('resources/images/background.png')
+background:setFilter('nearest', 'nearest')
+
+
 local tileWidth, tileHeight = 32, 32
 
 local quadInfo = { 
@@ -77,4 +81,4 @@ tb:row(triggers, 1, 23, 14, 8, 1)
 
 local gravity = vector(0, 600)
 
-return tileset, quads, tileString, tileWidth, gravity, solid, triggers, 'test'
+return tileset, quads, tileString, tileWidth, gravity, solid, triggers, background, 'test'

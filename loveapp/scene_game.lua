@@ -239,6 +239,11 @@ end
 
 function game.draw(self)
   love.graphics.push()
+  love.graphics.translate(-self.camera.offset.x * 0.5, -self.camera.offset.y * 0.5)
+  love.graphics.draw(self.level.background, 0, 0, 0, 4, 4)
+  love.graphics.pop()
+  
+  love.graphics.push()
 
   -- Game
   love.graphics.translate(-self.camera.offset.x, -self.camera.offset.y)
