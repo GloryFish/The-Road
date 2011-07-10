@@ -28,7 +28,7 @@ local quadInfo = {
   { '_', 1 * tileWidth, 0 * tileHeight}, -- 5 = brick ceiling
   { 'G', 2 * tileWidth, 0 * tileHeight}, -- 6 = goal
   { 'a', 1 * tileWidth, 1 * tileHeight}, -- 6 = activating
-  { 'A', 1 * tileWidth, 2 * tileHeight}, -- 6 = active
+  { 'A', 0 * tileWidth, 2 * tileHeight}, -- 6 = active
 }
 
 local solid = {

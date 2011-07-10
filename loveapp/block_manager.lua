@@ -12,9 +12,10 @@ require 'colors'
 require 'vector'
 
 Block = class('Block')
-function Block:initialize(pos, size)
+function Block:initialize(pos, size, scale)
   self.position = pos
   self.size = size
+  self.scale = scale
   self.velocity = vector(0, 0)
   -- self.tileset and self.quads should be set by the parent level
 
@@ -25,13 +26,13 @@ end
 
 function Block:containsPoint(point)
   return point.x > self.position.x and
-     point.x < self.position.x + self.size and
+     point.x < self.position.x + self.size * self.scale and
      point.y > self.position.y and
-     point.y < self.position.y + self.size
+     point.y < self.position.y + self.size * self.scale
 end
 
 function Block:setFloorPosition(floor)
-  self.position.y = floor - self.size
+  self.position.y = floor - (self.size * self.scale)
 end
 
 function Block:getBottomCenter(point)
@@ -40,14 +41,14 @@ function Block:getBottomCenter(point)
     testPos = self.position
   end
   
-  return vector(testPos.x + self.size / 2, testPos.y + self.size)
+  return vector(testPos.x + (self.size * self.scale) / 2, testPos.y + (self.size * self.scale))
 end
 
 BlockManager = class('BlockManager')
 function BlockManager:initialize(level)
   self.blocks = {}
   self.blockSize = 16
-  self.scale = 1
+  self.scale = 2
   self.level = level
   self.bounds = vector(self.level:getWidth(), self.level:getHeight()) -- World bounds are (0, 0, width, height)
 end
@@ -57,7 +58,7 @@ function BlockManager:reset()
 end
 
 function BlockManager:addBlock(pos)
-  local newBlock = Block(pos, self.blockSize)
+  local newBlock = Block(pos, self.blockSize, self.scale)
   
   table.insert(self.blocks, newBlock)  
 end
