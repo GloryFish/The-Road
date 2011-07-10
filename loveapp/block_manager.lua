@@ -17,6 +17,9 @@ function Block:initialize(pos, size)
   self.size = size
   self.velocity = vector(0, 0)
   -- self.tileset and self.quads should be set by the parent level
+
+  self.state = 'activating'
+  self.activatingDuration = 3
   
 end
 
@@ -65,16 +68,28 @@ function BlockManager:update(dt)
   local toRemove = {} -- Blocks we might want to remove because they are out of the world bounds
   
   for i, block in ipairs(self.blocks) do
-    block.velocity = block.velocity + self.level.gravity * dt * gravityAmount -- Gravity
-
-    if dt > 0.5 then
-      self.player.velocity.y = 0
+    if block.state == 'activating' then
+      block.activatingDuration = block.activatingDuration - dt
+      if block.activatingDuration < 0 then
+        block.state = 'active'
+      end
     end
-    
-    local newPos = block.position + block.velocity * dt
+
+    -- Gravity
+    if block.state == 'active' then
+      block.velocity = block.velocity + self.level.gravity * dt * gravityAmount -- Gravity
+
+      if dt > 0.5 then
+        self.player.velocity.y = 0
+      end
+
+      local newPos = block.position + block.velocity * dt
+
+    end
     
     local blockBottomPos = block:getBottomCenter(newPos)
     
+    -- Collision
     if block.velocity.y > 0 then -- Falling
       if not self.level:pointIsWalkable(blockBottomPos) then -- Collide with bottom
         block:setFloorPosition(self.level:floorPosition(blockBottomPos))
@@ -97,8 +112,14 @@ end
 
 function BlockManager:draw()
   for i, block in ipairs(self.blocks) do
+    local quad = 'A'
+    
+    if block.state == 'activating' then
+      quad = 'a'
+    end
+    
     love.graphics.drawq(self.tileset,
-                        self.quads['A'], 
+                        self.quads[quad], 
                         block.position.x, 
                         block.position.y, 
                         0,
