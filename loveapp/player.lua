@@ -22,8 +22,8 @@ function Player:initialize(pos)
   self.tileset = love.graphics.newImage('resources/images/spritesheet.png')
   self.tileset:setFilter('nearest', 'nearest')
 
-  self.tileSize = 32
-  self.scale = 1
+  self.tileSize = 16
+  self.scale = 2
   self.offset = vector(self.tileSize / 2, self.tileSize / 2)
 
   -- Quads, animation frames

@@ -18,7 +18,7 @@ local background = love.graphics.newImage('resources/images/background.png')
 background:setFilter('nearest', 'nearest')
 
 
-local tileWidth, tileHeight = 32, 32
+local tileWidth, tileHeight = 16, 16
 
 local quadInfo = { 
   { ' ', 0 * tileWidth, 3 * tileHeight}, -- 1 = air 

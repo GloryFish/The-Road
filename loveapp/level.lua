@@ -14,7 +14,7 @@ require 'block_manager'
 Level = class('Level')
 function Level:initialize(name)
 
-  self.scale = 1
+  self.scale = 2
   self.name = name
   
   self.tileset, self.quads, self.tileString, self.tileSize, self.gravity, self.solid, self.triggers, self.background, self.nextLevelName = love.filesystem.load(string.format('resources/maps/%s.lua', name))()
