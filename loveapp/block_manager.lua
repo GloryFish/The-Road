@@ -12,7 +12,7 @@ require 'colors'
 require 'vector'
 
 Block = class('Block')
-function Block:initialize(pos, size, scale)
+function Block:initialize(pos, size, scale, delay)
   self.position = pos
   self.size = size
   self.scale = scale
@@ -20,7 +20,10 @@ function Block:initialize(pos, size, scale)
   -- self.tileset and self.quads should be set by the parent level
 
   self.state = 'activating'
-  self.activatingDuration = 3
+  self.activatingDuration = delay
+  if delay == nil then
+    self.activatingDuration = 3
+  end
   
 end
 
@@ -57,8 +60,8 @@ function BlockManager:reset()
   self.blocks = {}
 end
 
-function BlockManager:addBlock(pos)
-  local newBlock = Block(pos, self.blockSize, self.scale)
+function BlockManager:addBlock(pos, delay)
+  local newBlock = Block(pos, self.blockSize, self.scale, delay)
   
   table.insert(self.blocks, newBlock)  
 end
