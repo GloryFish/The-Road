@@ -117,15 +117,20 @@ end
 function BlockManager:draw()
   for i, block in ipairs(self.blocks) do
     local quad = 'A'
+    local jitter = vector(0, 0)
     
     if block.state == 'activating' then
       quad = 'a'
+      
+      jitter.x = math.random(-2, 2)
+      jitter.y = math.random(-2, 2)
     end
+    
     
     love.graphics.drawq(self.tileset,
                         self.quads[quad], 
-                        block.position.x, 
-                        block.position.y, 
+                        block.position.x + jitter.x, 
+                        block.position.y + jitter.y, 
                         0,
                         self.scale,
                         self.scale)
