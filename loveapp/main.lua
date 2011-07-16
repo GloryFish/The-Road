@@ -34,7 +34,10 @@ function love.load()
   }
 
   music = {
+    title = love.audio.newSource("resources/music/earthcrisis11.xm", 'stream'), -- http://modarchive.org/index.php?request=view_by_moduleid&query=170449
   }
+  music.title:setLooping(true)
+  
   
   sounds = {
     menuselect = love.audio.newSource('resources/sounds/select.mp3', 'static')
