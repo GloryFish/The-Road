@@ -250,10 +250,15 @@ function game.update(self, dt)
 end
 
 function game.draw(self)
-  love.graphics.push()
-  love.graphics.translate(-self.camera.offset.x * 0.5, -self.camera.offset.y * 0.5)
-  love.graphics.draw(self.level.background, 0, 0, 0, 4, 4)
-  love.graphics.pop()
+  local overlayCount = #self.level.backgrounds
+  local maxOverlayMovement = 0.75
+  
+  for i, background in ipairs(self.level.backgrounds) do
+    love.graphics.push()
+    love.graphics.translate(-self.camera.offset.x * maxOverlayMovement / overlayCount * i, -self.camera.offset.y * maxOverlayMovement / overlayCount * i)
+    love.graphics.draw(background, 0, 0, 0, 4, 4)
+    love.graphics.pop()
+  end
   
   love.graphics.push()
 

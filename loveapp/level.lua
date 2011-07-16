@@ -18,7 +18,7 @@ function Level:initialize(name)
   self.name = name
   self.timer = require 'timer'
   
-  self.tileset, self.quads, self.tileString, self.tileSize, self.gravity, self.solid, self.triggers, self.background, self.nextLevelName = love.filesystem.load(string.format('resources/maps/%s.lua', name))()
+  self.tileset, self.quads, self.tileString, self.tileSize, self.gravity, self.solid, self.triggers, self.backgrounds, self.nextLevelName = love.filesystem.load(string.format('resources/maps/%s.lua', name))()
 
   self.enemyStarts = {}
   self.pickupSpawns = {}
