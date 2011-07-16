@@ -36,10 +36,14 @@ function mainmenu.enter(self, pre)
   
   self.menu = Menu(vector(love.graphics.getWidth() / 2, 200))
   
-  local startButton = TextButton('TEST')
+  local startButton = TextButton('Test')
   startButton.action = self.runTestLevel
   self.menu:addButton(startButton)
 
+  local quitButton = TextButton('Quit')
+  quitButton.action = function() love.event.push('q') end
+  self.menu:addButton(quitButton)
+  
   music.title:setVolume(0.5)
   love.audio.play(music.title)
 end
