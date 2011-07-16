@@ -21,7 +21,7 @@ background:setFilter('nearest', 'nearest')
 local tileWidth, tileHeight = 16, 16
 
 local quadInfo = { 
-  { ' ', 0 * tileWidth, 3 * tileHeight}, -- 1 = air 
+  { ' ', 1 * tileWidth, 3 * tileHeight}, -- 1 = air 
   { '#', 1 * tileWidth, 0 * tileHeight}, -- 2 = brick floor
   { ']', 1 * tileWidth, 0 * tileHeight}, -- 3 = brick wall left
   { '[', 1 * tileWidth, 0 * tileHeight}, -- 4 = brick wall right
