@@ -21,21 +21,18 @@ background:setFilter('nearest', 'nearest')
 local tileWidth, tileHeight = 16, 16
 
 local quadInfo = { 
+  { '-', 0 * tileWidth, 0 * tileHeight}, -- 3 = mossy stone
+  { 'm', 0 * tileWidth, 1 * tileHeight}, -- 6 = mossy stone activating
+  { '#', 1 * tileWidth, 0 * tileHeight}, -- 2 = normal stone
+  { 'n', 1 * tileWidth, 1 * tileHeight}, -- 6 = normal stone activating
+  { 'A', 0 * tileWidth, 2 * tileHeight}, -- 6 = active stone
   { ' ', 1 * tileWidth, 3 * tileHeight}, -- 1 = air 
-  { '#', 1 * tileWidth, 0 * tileHeight}, -- 2 = brick floor
-  { ']', 1 * tileWidth, 0 * tileHeight}, -- 3 = brick wall left
-  { '[', 1 * tileWidth, 0 * tileHeight}, -- 4 = brick wall right
-  { '_', 1 * tileWidth, 0 * tileHeight}, -- 5 = brick ceiling
   { 'G', 2 * tileWidth, 0 * tileHeight}, -- 6 = goal
-  { 'a', 1 * tileWidth, 1 * tileHeight}, -- 6 = activating
-  { 'A', 0 * tileWidth, 2 * tileHeight}, -- 6 = active
 }
 
 local solid = {
   '#',
-  ']',
-  '[',
-  '_',
+  '-',
 }
 
 
@@ -62,7 +59,7 @@ local tileString = [[
 #       ########             #
 #                            #
 #                     G      #
-##############################
+#----------------------------#
 ##############################
 #                            #
 #                            #

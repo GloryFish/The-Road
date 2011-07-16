@@ -88,11 +88,10 @@ function Level:activateBlockAtTileCoords(point, delay)
   
   if self.tiles[tilePoint.x] ~= nil then
     if table.contains(self.solid, self.tiles[tilePoint.x][tilePoint.y]) then
-      self.tiles[tilePoint.x][tilePoint.y] = ' '
-
       -- Get the world coordinates of the upper left coordinate of the selected tile
       local worldPoint = self:toWorldCoords(tilePoint)
-      self.blockManager:addBlock(worldPoint, delay)  
+      self.blockManager:addBlock(worldPoint, delay, self.tiles[tilePoint.x][tilePoint.y])  
+      self.tiles[tilePoint.x][tilePoint.y] = ' '
     end
   end
 end

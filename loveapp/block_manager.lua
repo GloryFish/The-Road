@@ -12,19 +12,17 @@ require 'colors'
 require 'vector'
 
 Block = class('Block')
-function Block:initialize(pos, size, scale, delay)
+function Block:initialize(pos, size, scale, delay, char)
   self.position = pos
   self.size = size
   self.scale = scale
   self.velocity = vector(0, 0)
-  -- self.tileset and self.quads should be set by the parent level
-
   self.state = 'activating'
   self.activatingDuration = delay
   if delay == nil then
     self.activatingDuration = 3
   end
-  
+  self.char = char
 end
 
 function Block:containsPoint(point)
@@ -54,14 +52,16 @@ function BlockManager:initialize(level)
   self.scale = 2
   self.level = level
   self.bounds = vector(self.level:getWidth(), self.level:getHeight()) -- World bounds are (0, 0, width, height)
+  -- self.tileset and self.quads should be set by the parent level
+  
 end
 
 function BlockManager:reset()
   self.blocks = {}
 end
 
-function BlockManager:addBlock(pos, delay)
-  local newBlock = Block(pos, self.blockSize, self.scale, delay)
+function BlockManager:addBlock(pos, delay, char)
+  local newBlock = Block(pos, self.blockSize, self.scale, delay, char)
   
   table.insert(self.blocks, newBlock)  
 end
@@ -120,7 +120,10 @@ function BlockManager:draw()
     local jitter = vector(0, 0)
     
     if block.state == 'activating' then
-      quad = 'a'
+      quad = 'n'
+      if block.char == '-' then
+        quad = 'm'
+      end
       
       jitter.x = math.random(-2, 2)
       jitter.y = math.random(-2, 2)
