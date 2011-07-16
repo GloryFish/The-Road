@@ -41,6 +41,11 @@ function Player:initialize(pos)
     love.graphics.newQuad(2 * self.tileSize, 0 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight())
   }
 
+  self.animations['falling'] = {}
+  self.animations['falling'].quads = {
+    love.graphics.newQuad(3 * self.tileSize, 0 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight())
+  }
+
   self.animations['walking'] = {}
 	self.animations['walking'].frameInterval = 0.1
   self.animations['walking'].quads = {

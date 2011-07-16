@@ -107,11 +107,8 @@ function game.update(self, dt)
   
     self.log:addLine(string.format('World: %i, %i', mouse.x, mouse.y))
     self.log:addLine(string.format('Tile: %i, %i, %s', tile.x, tile.y, tileString))
-    -- if self.player.onground then
-    --   self.log:addLine(string.format('State: %s', 'On Ground'))
-    -- else
-    --   self.log:addLine(string.format('State: %s', 'Jumping'))
-    -- end
+    self.log:addLine(string.format('State: %s', self.player.animation.current))
+
     -- self.log:addLine(string.format('Width: %i Height: %i', self.level:getWidth(), self.level:getHeight()))
 
     -- if (self.level:pointIsWalkable(mouse)) then
@@ -177,6 +174,9 @@ function game.update(self, dt)
       self.player:setFloorPosition(self.level:floorPosition(testBL))
       self.player.velocity.y = 0
       self.player.onground = true
+    else
+      self.player.onground = false
+      self.player:setAnimation('falling')
     end
   end
 
