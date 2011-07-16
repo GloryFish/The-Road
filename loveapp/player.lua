@@ -57,7 +57,7 @@ function Player:initialize(pos)
   
   self.animations['dead'] = {}
   self.animations['dead'].quads = {
-    love.graphics.newQuad(2 * self.tileSize, 1 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
+    love.graphics.newQuad(6 * self.tileSize, 0 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
   }
 
   self.animation = {}
