@@ -30,7 +30,7 @@ function Player:initialize(pos)
   self.animations = {}
   
   self.animations['standing'] = {}
-  self.animations['standing'].frameInterval = 0.75
+  self.animations['standing'].frameInterval = 0.5
   self.animations['standing'].quads = {
     love.graphics.newQuad(3 * self.tileSize, 0 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
     love.graphics.newQuad(3 * self.tileSize, 1 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
