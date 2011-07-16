@@ -38,12 +38,12 @@ function Player:initialize(pos)
   
   self.animations['jumping'] = {}
   self.animations['jumping'].quads = {
-    love.graphics.newQuad(2 * self.tileSize, 0 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight())
+    love.graphics.newQuad(5 * self.tileSize, 1 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight())
   }
 
   self.animations['falling'] = {}
   self.animations['falling'].quads = {
-    love.graphics.newQuad(3 * self.tileSize, 0 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight())
+    love.graphics.newQuad(5 * self.tileSize, 0 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight())
   }
 
   self.animations['walking'] = {}
