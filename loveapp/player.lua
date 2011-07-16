@@ -171,6 +171,9 @@ function Player:update(dt)
   -- Handle animation
   if #self.animations[self.animation.current].quads > 1 then -- More than one frame
     local interval = self.animations[self.animation.current].frameInterval
+
+    assert(interval, string.format('animation "%s" has multiple frames but has no frameInterval specified', self.animation.current))
+
     interval = interval + (interval - (interval * math.abs(self.movement.x)))
     
     if self.animation.elapsed > interval then -- Switch to next frame
