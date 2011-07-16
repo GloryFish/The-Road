@@ -20,6 +20,8 @@ function Level:initialize(name)
   
   self.tileset, self.quads, self.tileString, self.tileSize, self.gravity, self.solid, self.triggers, self.backgrounds, self.nextLevelName = love.filesystem.load(string.format('resources/maps/%s.lua', name))()
 
+  self.spriteBatch = love.graphics.newSpriteBatch(self.tileset, 1000)
+
   self.enemyStarts = {}
   self.pickupSpawns = {}
 
@@ -131,18 +133,29 @@ end
 
 
 function Level:draw()
+  self.spriteBatch:clear()
+  
   love.graphics.setColor(255, 255, 255, 255)
   for x, column in ipairs(self.tiles) do
     for y, char in ipairs(column) do
-      love.graphics.drawq(self.tileset,
-                          self.quads[char], 
-                          (x - 1) * self.tileSize * self.scale, 
-                          (y - 1) * self.tileSize * self.scale,
-                          0,
-                          self.scale,
-                          self.scale)
+      -- love.graphics.drawq(self.tileset,
+      --                     self.quads[char], 
+      --                     (x - 1) * self.tileSize * self.scale, 
+      --                     (y - 1) * self.tileSize * self.scale,
+      --                     0,
+      --                     self.scale,
+      --                     self.scale)
+      self.spriteBatch:addq(self.quads[char], 
+                            (x - 1) * self.tileSize * self.scale, 
+                            (y - 1) * self.tileSize * self.scale,
+                            0,
+                            self.scale,
+                            self.scale)
+
     end
   end
+
+  love.graphics.draw(self.spriteBatch)
   
   self.blockManager:draw()
   

@@ -77,6 +77,7 @@ function mainmenu.update(self, dt)
   if debug then
     self.log:update(dt)
     self.log:addLine(string.format('Camera: %s', tostring(self.camera.position)))
+    self.log:addLine(string.format('FPS: %s', tostring(love.timer.getFPS())))
   end
   self.level:update(dt)
   self.texttyper:update(dt)
