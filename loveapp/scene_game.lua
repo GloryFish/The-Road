@@ -176,7 +176,9 @@ function game.update(self, dt)
       self.player.onground = true
     else
       self.player.onground = false
-      self.player:setAnimation('falling')
+      if not self.player.dead then
+        self.player:setAnimation('falling')
+      end
     end
   end
 
