@@ -13,6 +13,7 @@ require 'level'
 require 'camera'
 require 'text_typer'
 require 'scene_game'
+require 'logo'
 
 mainmenu = Gamestate.new()
 
@@ -26,6 +27,10 @@ function mainmenu.enter(self, pre)
   local titleWidth = fonts.gamegirl:getWidth(title)
   local titlePos = vector((love.graphics.getWidth() / 2) - (titleWidth / 2), 400)
   self.texttyper = TextTyper(title, fonts.gamegirl, titlePos, 15, colors.lightest)
+  
+  self.logo = Logo('resources/images/logo.png')
+  self.logo.position = vector(110, 50)
+  self.logo:fadeIn()
   
   self.camera = Camera()
   self.camera.bounds = {
@@ -91,6 +96,7 @@ function mainmenu.update(self, dt)
   self.level:update(dt)
   self.texttyper:update(dt)
   self.camera:update(dt)
+  self.logo:update(dt)
 end
 
 function mainmenu.draw(self)
@@ -121,6 +127,8 @@ function mainmenu.draw(self)
   self.texttyper:draw()
 
   self.menu:draw()
+  
+  self.logo:draw()
   
   if debug then
     self.log:draw()
