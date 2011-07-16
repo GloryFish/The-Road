@@ -42,12 +42,12 @@ function Player:initialize(pos)
   }
 
   self.animations['walking'] = {}
-	self.animations['walking'].frameInterval = 0.75
+	self.animations['walking'].frameInterval = 0.1
   self.animations['walking'].quads = {
-    love.graphics.newQuad(5 * self.tileSize, 0 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
-		love.graphics.newQuad(5 * self.tileSize, 1 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
-		love.graphics.newQuad(5 * self.tileSize, 2 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
-		love.graphics.newQuad(5 * self.tileSize, 3 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
+    love.graphics.newQuad(4 * self.tileSize, 0 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
+		love.graphics.newQuad(4 * self.tileSize, 1 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
+		love.graphics.newQuad(4 * self.tileSize, 2 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
+		love.graphics.newQuad(4 * self.tileSize, 3 * self.tileSize, self.tileSize, self.tileSize, self.tileset:getWidth(), self.tileset:getHeight()),
   }
   
   self.animations['dead'] = {}
