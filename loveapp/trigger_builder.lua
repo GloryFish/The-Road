@@ -24,7 +24,7 @@ function TriggerBuilder:row(triggers, startX, endX, y, startTime, interval)
   local count = 1
   for x = startX, endX, delta do
     local trigger = {
-      position = vector(x, y),
+      position = vector(x, y) + vector(-1, -1),
       time = startTime + interval * count
     }
     table.insert(triggers, trigger)

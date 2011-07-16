@@ -72,9 +72,10 @@ local tileString = [[
 local triggers = {}
 
 local tb = TriggerBuilder()
-tb:row(triggers, 9, 15, 3, 4, 0.5)
-tb:row(triggers, 1, 23, 15, 2, 1)
-tb:row(triggers, 1, 23, 14, 8, 1)
+tb:row(triggers, 10, 16, 4, 4, 0.5)
+tb:row(triggers, 2, 24, 16, 2, 1)
+tb:row(triggers, 2, 24, 15, 8, 1)
+tb:row(triggers, 10, 17, 12, 9, 0.2)
 
 local gravity = vector(0, 600)
 
