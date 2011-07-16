@@ -36,6 +36,8 @@ function game.enter(self, pre)
   self.camera.position = self.player.position:clone()
   self.camera:update(0)
   self.goalReached = false
+  
+  self.attemptElapsed = 0 -- Total time taken for the current attempt, resets to zero on death or reset()
 end
 
 function game.reset(self)
@@ -50,6 +52,7 @@ function game.reset(self)
     left = 0
   }
   self.goalReached = false
+  self.attemptElapsed = 0
 end
 
 function game.keypressed(self, key, unicode)
@@ -79,6 +82,7 @@ function game.mousereleased(self, x, y, button)
 end
 
 function game.update(self, dt)
+  self.attemptElapsed = self.attemptElapsed + dt
   if debug then
     self.log:update(dt)
 
@@ -100,29 +104,34 @@ function game.update(self, dt)
   
     self.log:addLine(string.format('World: %i, %i', mouse.x, mouse.y))
     self.log:addLine(string.format('Tile: %i, %i, %s', tile.x, tile.y, tileString))
-    if self.player.onground then
-      self.log:addLine(string.format('State: %s', 'On Ground'))
-    else
-      self.log:addLine(string.format('State: %s', 'Jumping'))
-    end
-    self.log:addLine(string.format('Width: %i Height: %i', self.level:getWidth(), self.level:getHeight()))
+    -- if self.player.onground then
+    --   self.log:addLine(string.format('State: %s', 'On Ground'))
+    -- else
+    --   self.log:addLine(string.format('State: %s', 'Jumping'))
+    -- end
+    -- self.log:addLine(string.format('Width: %i Height: %i', self.level:getWidth(), self.level:getHeight()))
 
-    if (self.level:pointIsWalkable(mouse)) then
-      self.log:addLine(string.format('Walkable'))
-    else
-      self.log:addLine(string.format('Wall'))
-    end
+    -- if (self.level:pointIsWalkable(mouse)) then
+    --   self.log:addLine(string.format('Walkable'))
+    -- else
+    --   self.log:addLine(string.format('Wall'))
+    -- end
 
-    self.log:addLine(string.format('Active: %i', #self.level.blockManager.blocks))
+    -- self.log:addLine(string.format('Active: %i', #self.level.blockManager.blocks))
 
-    self.log:addLine(string.format('Player animation: %s', self.player.animation.current))
-    self.log:addLine(string.format('Player velocity: %s', tostring(self.player.velocity)))
+    -- self.log:addLine(string.format('Player animation: %s', self.player.animation.current))
+    -- self.log:addLine(string.format('Player velocity: %s', tostring(self.player.velocity)))
 
-    self.log:addLine(string.format('Goal: %f', self.player.position:dist(self.level.goal)))
+    -- self.log:addLine(string.format('Goal: %f', self.player.position:dist(self.level.goal)))
     
-    if self.goalReached then
-      self.log:addLine('GOAL!!!!!!')
-    end
+    -- if self.goalReached then
+    --   self.log:addLine('GOAL!!!!!!')
+    -- end
+    self.log:addLine(string.format("Time: %i:%02d", self.attemptElapsed / 60, self.attemptElapsed % 60))
+
+
+
+
     self.log:addLine(string.format('Press R to reset.'))
 
   end
