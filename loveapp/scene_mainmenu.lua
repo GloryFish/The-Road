@@ -43,6 +43,15 @@ function mainmenu.enter(self, pre)
   startButton.action = self.runTestLevel
   self.menu:addButton(startButton)
 
+  local jaysLevelButton = TextButton("Jay's Level")
+  jaysLevelButton.action = function()
+    debug = true
+    game.level = Level('jay')
+    Gamestate.switch(game)
+  end
+  
+  self.menu:addButton(jaysLevelButton)
+
   local quitButton = TextButton('Quit')
   quitButton.action = function() love.event.push('q') end
   self.menu:addButton(quitButton)
