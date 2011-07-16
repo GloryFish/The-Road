@@ -22,6 +22,7 @@ function Camera:initialize()
   self.position = vector(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
   self.focus = vector(love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
   self.deadzone = 100
+  self.scale = 1
 end
 
 

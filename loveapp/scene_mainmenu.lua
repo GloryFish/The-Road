@@ -17,6 +17,9 @@ require 'scene_game'
 mainmenu = Gamestate.new()
 
 function mainmenu.enter(self, pre)
+  self.log = Logger(vector(10, 10))
+  self.log.color = colors.white
+  
   self.level = Level('mainmenu')
   
   local title = "The Road Won't Rise to Meet You"
@@ -26,15 +29,15 @@ function mainmenu.enter(self, pre)
   
   self.camera = Camera()
   self.camera.bounds = {
-    top = 0,
-    right = math.max(self.level:getWidth(), love.graphics.getWidth()),
-    bottom = math.max(self.level:getHeight(), love.graphics.getHeight()),
-    left = 0
+    top = 0 - 1000,
+    right = math.max(self.level:getWidth() + 1000, love.graphics.getWidth()),
+    bottom = math.max(self.level:getHeight()  + 1000, love.graphics.getHeight()),
+    left = 0 - 1000
   }
-  self.camera.position = vector(200, 200)
+  self.camera.position = vector(300, 200)
   self.camera:update(0)
   
-  self.menu = Menu(vector(love.graphics.getWidth() / 2, 200))
+  self.menu = Menu(vector(love.graphics.getWidth() / 2, 270))
   
   local startButton = TextButton('Test')
   startButton.action = self.runTestLevel
@@ -50,6 +53,20 @@ end
 
 function mainmenu.mousepressed(self, x, y, button)
   self.menu:mousepressed(vector(x, y))
+
+  if debug and button == 'l' then
+    local mouse = vector(love.mouse.getX(), love.mouse.getY()) + self.camera.offset
+    self.camera.focus = mouse
+  end
+  
+  if debug and button == 'wu' then
+    self.camera.scale = self.camera.scale + 0.2
+  end
+
+  if debug and button == 'wd' then
+    self.camera.scale = self.camera.scale - 0.2
+  end
+  
 end
 
 function mainmenu.mousereleased(self, x, y, button)
@@ -57,12 +74,20 @@ function mainmenu.mousereleased(self, x, y, button)
 end
 
 function mainmenu.update(self, dt)
+  if debug then
+    self.log:update(dt)
+    self.log:addLine(string.format('Camera: %s', tostring(self.camera.position)))
+  end
   self.level:update(dt)
   self.texttyper:update(dt)
+  self.camera:update(dt)
 end
 
 function mainmenu.draw(self)
   -- Backgrounds
+  love.graphics.push()
+  love.graphics.scale(self.camera.scale)
+  
   colors.white:set()
   local overlayCount = #self.level.backgrounds
   local maxOverlayMovement = 0.75
@@ -79,11 +104,17 @@ function mainmenu.draw(self)
   love.graphics.translate(-self.camera.offset.x, -self.camera.offset.y)
   self.level:draw()
   love.graphics.pop()
+
+  love.graphics.pop()
   
   love.graphics.translate(0, 0)  
   self.texttyper:draw()
 
   self.menu:draw()
+  
+  if debug then
+    self.log:draw()
+  end
 end
 
 function mainmenu.runTestLevel(self)
