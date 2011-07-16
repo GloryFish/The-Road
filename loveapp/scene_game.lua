@@ -201,7 +201,7 @@ function game.update(self, dt)
   local testUL = vector(curUL.x, newUL.y)
   local testUR = vector(curUR.x, newUR.y)
 
-  if not self.player.dead and self.level:pointIsLethal(testUL) or self.level:pointIsLethal(testUR) then -- Kill player
+  if not self.player.dead and (self.level:pointIsLethal(testUL) or self.level:pointIsLethal(testUR)) then -- Kill player
     self.player:kill()
     self.fader:fadeOut()
     self.timer.add(self.fader.maxduration, function() self:reset() end)
@@ -251,7 +251,7 @@ function game.update(self, dt)
       -- Next level
       self.level = Level(self.level.nextLevelName)
       self:reset()
-    else -- Player is dead
+    elseif not self.player.dead then -- Kill him
       self.player:kill()
       self.fader:fadeOut()
       self.timer.add(self.fader.maxduration, function() self:reset() end)
