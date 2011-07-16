@@ -34,7 +34,7 @@ function mainmenu.enter(self, pre)
     bottom = math.max(self.level:getHeight()  + 1000, love.graphics.getHeight()),
     left = 0 - 1000
   }
-  self.camera.position = vector(300, 200)
+  self.camera.position = vector(325, 300)
   self.camera:update(0)
   
   self.menu = Menu(vector(love.graphics.getWidth() / 2, 270))
@@ -54,7 +54,7 @@ end
 function mainmenu.mousepressed(self, x, y, button)
   self.menu:mousepressed(vector(x, y))
 
-  if debug and button == 'l' then
+  if debug and button == 'r' then
     local mouse = vector(love.mouse.getX(), love.mouse.getY()) + self.camera.offset
     self.camera.focus = mouse
   end
