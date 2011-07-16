@@ -44,9 +44,6 @@ function game.enter(self, pre)
   self.goalReached = false
   self.attemptElapsed = 0 -- Total time taken for the current attempt, resets to zero on death or reset()
   
-  music.title:setVolume(0.5)
-  love.audio.play(music.title)
-  
   self.timer = require 'timer'
 end
 
