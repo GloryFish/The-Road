@@ -14,6 +14,7 @@ function Menu:initialize(pos)
   self.position = pos
   self.buttons = {}
   self.visible = true
+  self.padding = 35
 end
 
 function Menu:mousepressed(pos)
@@ -41,7 +42,7 @@ function Menu:layoutButtons()
   local y = self.position.y
   for i, button in ipairs(self.buttons) do
     button.position = vector(self.position.x, y)
-    y = y + 55
+    y = y + self.padding
   end
 end
 

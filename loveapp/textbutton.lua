@@ -15,7 +15,7 @@ TextButton = class('TextButton')
 function TextButton:initialize(text)
   self.position = vector(0, 0)
   self.text = text
-  self.color = colors.white
+  self.color = colors.lightest
   self.font = fonts.button
   self.fontSelected = fonts.buttonSelected
   
@@ -69,15 +69,12 @@ function TextButton:draw()
   love.graphics.setFont(font)
   local lineWidth = font:getWidth(self.text)
 
-  colors.black:set()
+  colors.darkest:set()
   love.graphics.print(self.text, 
                       (self.position.x - lineWidth / 2) + 1, 
                       self.position.y + 1)
 
-  love.graphics.setColor(self.color.r,
-                         self.color.g,
-                         self.color.b,
-                         self.color.a)
+  self.color:set()
 
   love.graphics.print(self.text, 
                       self.position.x - lineWidth / 2, 
