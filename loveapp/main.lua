@@ -31,6 +31,7 @@ function love.load()
     tiny           = love.graphics.newFont('resources/fonts/silkscreen.ttf', 14),
     button         = love.graphics.newFont('resources/fonts/silkscreen.ttf', 48),
     buttonSelected = love.graphics.newFont('resources/fonts/silkscreen.ttf', 52)
+    gamegirl       = love.graphics.newFont('resources/fonts/gamegirl.ttf', 18), -- http://www.fontspace.com/freaky-fonts/gamegirl-classic
   }
 
   music = {
