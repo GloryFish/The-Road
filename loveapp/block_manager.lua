@@ -26,9 +26,9 @@ function Block:initialize(pos, size, scale, delay, char)
 end
 
 function Block:containsPoint(point)
-  return point.x > self.position.x and
+  return point.x >= self.position.x and
      point.x < self.position.x + self.size * self.scale and
-     point.y > self.position.y and
+     point.y >= self.position.y and
      point.y < self.position.y + self.size * self.scale
 end
 
@@ -84,7 +84,7 @@ function BlockManager:update(dt)
       block.velocity = block.velocity + self.level.gravity * dt * gravityAmount -- Gravity
 
       if dt > 0.5 then
-        self.player.velocity.y = 0
+        block.velocity.y = 0
       end
 
       local newPos = block.position + block.velocity * dt
