@@ -47,5 +47,9 @@ colors = {
   gray = Color(44, 44, 44),
   lightgray = Color(120, 120, 120),
   transgray = Color(44, 44, 44, 44),
-  transwhite = Color(88, 88, 88, 44)
+  -- These are the 4 greyscale colors
+  lightest = Color(163, 173, 121),
+  light = Color(126, 135, 94),
+  dark = Color(78, 83, 57),
+  darkest = Color(46, 50, 33),
 }

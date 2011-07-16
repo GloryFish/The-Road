@@ -13,6 +13,7 @@ require 'player'
 require 'vector'
 require 'textfader'
 require 'colors'
+require 'fader'
 
 game = Gamestate.new()
 game.level = nil
@@ -35,12 +36,18 @@ function game.enter(self, pre)
   }
   self.camera.position = self.player.position:clone()
   self.camera:update(0)
+
+  self.fader = Fader()
+  self.fader.maxduration = 1.5
+  self.fader.color = colors.lightest
+
   self.goalReached = false
-  
   self.attemptElapsed = 0 -- Total time taken for the current attempt, resets to zero on death or reset()
   
   music.title:setVolume(0.5)
   love.audio.play(music.title)
+  
+  self.timer = require 'timer'
 end
 
 function game.reset(self)
@@ -56,6 +63,7 @@ function game.reset(self)
   }
   self.goalReached = false
   self.attemptElapsed = 0
+  self.fader:fadeIn()
 end
 
 function game.keypressed(self, key, unicode)
@@ -66,6 +74,11 @@ function game.keypressed(self, key, unicode)
   if debug and key == 'r' then
     self:reset()
   end
+
+  if debug and key == 'f' then
+    self.fader:fadeIn()
+  end
+
 end
 
 function game.mousepressed(self, x, y, button)
@@ -136,6 +149,8 @@ function game.update(self, dt)
 
   end
   
+  self.fader:update(dt)
+  
   input:update(dt)
   self.level:update(dt)
   
@@ -188,6 +203,8 @@ function game.update(self, dt)
 
   if not self.player.dead and self.level:pointIsLethal(testUL) or self.level:pointIsLethal(testUR) then -- Kill player
     self.player:kill()
+    self.fader:fadeOut()
+    self.timer.add(self.fader.maxduration, function() self:reset() end)
   end
 
   -- If we survived that, then we can check for a jumping collision against somethign that's non-walkable
@@ -234,8 +251,10 @@ function game.update(self, dt)
       -- Next level
       self.level = Level(self.level.nextLevelName)
       self:reset()
-    else -- Player so dead
+    else -- Player is dead
       self.player:kill()
+      self.fader:fadeOut()
+      self.timer.add(self.fader.maxduration, function() self:reset() end)
     end
   end
 
@@ -272,6 +291,8 @@ function game.draw(self)
   love.graphics.pop()
   
   love.graphics.translate(0, 0)  
+
+  self.fader:draw()
 
   if debug then
     self.log:draw()
