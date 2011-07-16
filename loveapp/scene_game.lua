@@ -297,7 +297,7 @@ function game.draw(self)
 end
 
 function game.quit(self)
-  love.event.push('q')
+  Gamestate.switch(mainmenu)
 end
 
 -- set unused objects to nil so they can be garbage collected

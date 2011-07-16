@@ -8,9 +8,11 @@
 
 require 'vector'
 require 'menu'
+require 'textbutton'
 require 'level'
 require 'camera'
 require 'text_typer'
+require 'scene_game'
 
 mainmenu = Gamestate.new()
 
@@ -32,17 +34,22 @@ function mainmenu.enter(self, pre)
   self.camera.position = vector(200, 200)
   self.camera:update(0)
   
+  self.menu = Menu(vector(love.graphics.getWidth() / 2, 200))
+  
+  local startButton = TextButton('TEST')
+  startButton.action = self.runTestLevel
+  self.menu:addButton(startButton)
+
   music.title:setVolume(0.5)
   love.audio.play(music.title)
 end
 
 function mainmenu.mousepressed(self, x, y, button)
-  if debug then
-    local mouseWorldPoint = vector(x, y) + self.camera.offset
-  end
+  self.menu:mousepressed(vector(x, y))
 end
 
 function mainmenu.mousereleased(self, x, y, button)
+  self.menu:mousereleased(vector(x, y))
 end
 
 function mainmenu.update(self, dt)
@@ -71,7 +78,16 @@ function mainmenu.draw(self)
   
   love.graphics.translate(0, 0)  
   self.texttyper:draw()
+
+  self.menu:draw()
 end
+
+function mainmenu.runTestLevel(self)
+  debug = true
+  game.level = Level('test')
+  Gamestate.switch(game)
+end
+
 
 function mainmenu.leave(self)
   

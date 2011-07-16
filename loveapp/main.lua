@@ -31,7 +31,7 @@ function love.load()
     small          = love.graphics.newFont('resources/fonts/silkscreen.ttf', 20),
     tiny           = love.graphics.newFont('resources/fonts/silkscreen.ttf', 14),
     button         = love.graphics.newFont('resources/fonts/silkscreen.ttf', 48),
-    buttonSelected = love.graphics.newFont('resources/fonts/silkscreen.ttf', 52)
+    buttonSelected = love.graphics.newFont('resources/fonts/silkscreen.ttf', 52),
     gamegirl       = love.graphics.newFont('resources/fonts/gamegirl.ttf', 18), -- http://www.fontspace.com/freaky-fonts/gamegirl-classic
   }
 
@@ -46,10 +46,6 @@ function love.load()
   }
   
   input = Input()
-  
-  if debug then
-    game.level = Level('test')
-  end
   
   Gamestate.registerEvents()
   Gamestate.switch(mainmenu)
