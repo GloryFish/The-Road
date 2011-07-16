@@ -31,3 +31,22 @@ function TriggerBuilder:row(triggers, startX, endX, y, startTime, interval)
     count = count + 1
   end
 end
+
+function TriggerBuilder:column(triggers, x, startY, endY, startTime, interval)
+  local time = startTime
+
+  local delta = 1
+  if endY < startY then
+    delta = -1
+  end
+
+  local count = 1
+  for y = startY, endY, delta do
+    local trigger = {
+      position = vector(x, y) + vector(-1, -1),
+      time = startTime + interval * count
+    }
+    table.insert(triggers, trigger)
+    count = count + 1
+  end
+end
