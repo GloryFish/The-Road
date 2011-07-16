@@ -16,6 +16,7 @@ function Level:initialize(name)
 
   self.scale = 2
   self.name = name
+  self.timer = require 'timer'
   
   self.tileset, self.quads, self.tileString, self.tileSize, self.gravity, self.solid, self.triggers, self.background, self.nextLevelName = love.filesystem.load(string.format('resources/maps/%s.lua', name))()
 
@@ -65,7 +66,7 @@ function Level:loadTiles()
 end
 
 function Level:loadTriggers()
-  self.timer = require 'timer'
+  self.timer:clear()
   for i, trigger in ipairs(self.triggers) do
     self.timer.add(trigger.time + math.random(), function() self:activateBlockAtTileCoords(trigger.position) end)
   end
@@ -74,6 +75,7 @@ end
 function Level:reset()
   self:loadTiles()
   self.blockManager:reset()
+  self:loadTriggers()
 end
 
 function Level:activateBlockAtWorldCoords(point)
