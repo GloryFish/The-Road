@@ -11,7 +11,6 @@ require 'menu'
 require 'textbutton'
 require 'level'
 require 'camera'
-require 'text_typer'
 require 'scene_game'
 require 'logo'
 
@@ -22,11 +21,6 @@ function mainmenu.enter(self, pre)
   self.log.color = colors.white
   
   self.level = Level('mainmenu')
-  
-  local title = "The Road Won't Rise to Meet You"
-  local titleWidth = fonts.gamegirl:getWidth(title)
-  local titlePos = vector((love.graphics.getWidth() / 2) - (titleWidth / 2), 400)
-  self.texttyper = TextTyper(title, fonts.gamegirl, titlePos, 15, colors.lightest)
   
   self.logo = Logo('resources/images/logo.png')
   self.logo.position = vector(110, 50)
@@ -42,7 +36,7 @@ function mainmenu.enter(self, pre)
   self.camera.position = vector(325, 300)
   self.camera:update(0)
   
-  self.menu = Menu(vector(love.graphics.getWidth() / 2, 270))
+  self.menu = Menu(vector(love.graphics.getWidth() / 2, 300))
   
   local startButton = TextButton('Test')
   startButton.action = self.runTestLevel
@@ -94,7 +88,6 @@ function mainmenu.update(self, dt)
     self.log:addLine(string.format('FPS: %s', tostring(love.timer.getFPS())))
   end
   self.level:update(dt)
-  self.texttyper:update(dt)
   self.camera:update(dt)
   self.logo:update(dt)
 end
@@ -124,7 +117,6 @@ function mainmenu.draw(self)
   love.graphics.pop()
   
   love.graphics.translate(0, 0)  
-  self.texttyper:draw()
 
   self.menu:draw()
   
