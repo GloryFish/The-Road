@@ -7,8 +7,9 @@ A small game about how hard it is all the time.
 
 Congratulations! You made it to the top of the evil dragon's mountain lair.
 
-It is unfortunate however, that the dragon ate the princess, then cast a spell of disintegration
-on his subterranean lair, just as you crossed the threshold into his anti-chamber. 
+It is unfortunate however, that the dragon ate the princess just as you crossed the threshold into his anti-chamber.
+
+Now the walls are collapsing.
 
 It seems apparent you should run...
 
