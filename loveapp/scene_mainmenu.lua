@@ -42,6 +42,15 @@ function mainmenu.enter(self, pre)
   startButton.action = self.runTestLevel
   self.menu:addButton(startButton)
 
+	local paulsLevelButton = TextButton("Paul's Level")
+  paulsLevelButton.action = function()
+    debug = true
+    game.level = Level('paul')
+    Gamestate.switch(game)
+  end
+  
+  self.menu:addButton(paulsLevelButton)
+
   local jaysLevelButton = TextButton("Jay's Level")
   jaysLevelButton.action = function()
     debug = true
