@@ -58,8 +58,8 @@ local tileString = [[
 #                ###         #
 #                ###         #
 #    S           ###         #
-#                ###         #
-#                ###         #
+# #######        ###         #
+# #######        ###         #
 #                ###         #
 #                ###         #
 #       ######## ###         #
@@ -78,6 +78,9 @@ local tileString = [[
 local triggers = {}
 
 local tb = TriggerBuilder()
+
+tb:row(triggers, 3, 9, 8, 0, 0)
+
 
 tb:row(triggers, 10, 16, 4, 4, 0.5)
 tb:row(triggers, 2, 24, 16, 2, 1)
