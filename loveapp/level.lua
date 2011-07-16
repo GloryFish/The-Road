@@ -10,10 +10,10 @@ require 'middleclass'
 require 'vector'
 require 'tableextras'
 require 'block_manager'
+require 'goal'
 
 Level = class('Level')
 function Level:initialize(name)
-
   self.scale = 2
   self.name = name
   self.timer = require 'timer'
@@ -55,7 +55,7 @@ function Level:loadTiles()
         self.tiles[x][y] = ' '
       elseif character == 'G' then
         self:setGoal(x, y)
-        self.tiles[x][y] = 'G'
+        self.tiles[x][y] = ' '
       else  
         self.tiles[x][y] = character
       end
@@ -97,7 +97,7 @@ function Level:activateBlockAtTileCoords(point, delay)
 end
 
 function Level:dropGoal()
-  local tileGoal = self:toTileCoords(self.goal)
+  local tileGoal = self:toTileCoords(self.goal.position)
   
   for x = tileGoal.x - 2, tileGoal.x + 2, 1 do
     for y = tileGoal.y + 1, self:getHeight(), 1 do
@@ -113,7 +113,8 @@ function Level:setPlayerStart(x, y)
 end
 
 function Level:setGoal(x, y)
-  self.goal = self:toWorldCoordsCenter(vector(x - 1, y - 1))
+  self.goal = Goal()
+  self.goal.position = self:toWorldCoordsCenter(vector(x - 1, y - 1))
 end
 
 function Level:setPlayerStart(x, y)
@@ -124,6 +125,7 @@ end
 
 function Level:update(dt)
   self.blockManager:update(dt)
+  self.goal:update(dt)
   self.timer.update(dt)
 end
 
@@ -143,6 +145,8 @@ function Level:draw()
   end
   
   self.blockManager:draw()
+  
+  self.goal:draw()
 end
 
 function Level:getWidth()
@@ -183,7 +187,7 @@ function Level:tilePointIsWalkable(tilePoint)
 end
 
 function Level:pointIsAtGoal(point)
-  return point:dist(self.goal) < (self.tileSize * self.scale)
+  return point:dist(self.goal.position) < (self.tileSize * self.scale)
 end
 
 -- This function takes a world point returns the Y position of the top edge of the matching tile in world space
