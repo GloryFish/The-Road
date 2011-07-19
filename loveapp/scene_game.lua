@@ -47,7 +47,7 @@ function game.enter(self, pre)
   
   self.timer = require 'timer'
 
-  self.background = BackgroundParallax()
+  self.background = BackgroundParallax(vector(self.level:getWidth(), self.level:getHeight()))
   for i, background in ipairs(self.level.backgrounds) do
     self.background:add(background)
   end

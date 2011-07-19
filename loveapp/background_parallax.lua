@@ -18,7 +18,7 @@ end
 
 
 BackgroundParallax = class('BackgroundParallax')
-function BackgroundParallax:initialize()
+function BackgroundParallax:initialize(worldSize)
   self.position = vector(0, 0)
   self.offset = vector(0, 0)
   self.bounds = {
@@ -26,6 +26,11 @@ function BackgroundParallax:initialize()
     size = vector(0, 0)
   }
   self.images = {}
+  self.imageSize = vector(256, 256) -- We support 256x256 backgrounds for parallax
+  self.worldSize = worldSize
+
+  self.parallaxAmount = vector(self.imageSize.x / self.worldSize.x,
+                               self.imageSize.y / self.worldSize.y)
 end
 
 function BackgroundParallax:add(imageData)
@@ -40,11 +45,10 @@ end
 
 function BackgroundParallax:draw()
   local overlayCount = #self.images
-  local maxOverlayMovement = 0.75
   
   for i, image in ipairs(self.images) do
     love.graphics.push()
-    love.graphics.translate(-self.offset.x * maxOverlayMovement / overlayCount * i, -self.offset.y * maxOverlayMovement / overlayCount * i)
+    love.graphics.translate(-self.offset.x * self.parallaxAmount.x / overlayCount * i, -self.offset.y * self.parallaxAmount.y / overlayCount * i)
     love.graphics.draw(image.imageData, 0, 0, 0, 4, 4)
     love.graphics.pop()
   end

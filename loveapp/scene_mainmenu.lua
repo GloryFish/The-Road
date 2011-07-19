@@ -64,7 +64,7 @@ function mainmenu.enter(self, pre)
   quitButton.action = function() love.event.push('q') end
   self.menu:addButton(quitButton)
   
-  self.background = BackgroundParallax()
+  self.background = BackgroundParallax(vector(self.level:getWidth(), self.level:getHeight()))
   for i, background in ipairs(self.level.backgrounds) do
     self.background:add(background)
   end
