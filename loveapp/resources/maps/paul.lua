@@ -80,17 +80,12 @@ local tb = TriggerBuilder()
 
 -- starting block, ending block, row, starting time from beginning of level, duration of activation
 
+tb:row(triggers, 3, 18, 4, 18, 0)
 tb:row(triggers, 3, 9, 6, 2, 0)
-tb:row(triggers, 17, 17, 6, 21, 0)
-tb:row(triggers, 50, 71, 6, 32, .5)
+tb:row(triggers, 17, 17, 6, 10, 0)
+tb:row(triggers, 50, 65, 6, 22, .5)
 
-tb:row(triggers, 3, 9, 8, 0, 0)
-
-
-tb:row(triggers, 10, 16, 4, 4, 0.5)
-tb:row(triggers, 2, 24, 16, 2, 1)
-tb:row(triggers, 2, 23, 15, 8, 1)
-tb:row(triggers, 10, 17, 12, 9, 0.2)
+tb:column(triggers, 18, 22, 5, 7, 0.15)
 
 -- tb:column(triggers, 18, 22, 5, 7, 0.15)
 
