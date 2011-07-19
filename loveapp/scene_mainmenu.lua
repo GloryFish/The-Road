@@ -64,6 +64,11 @@ function mainmenu.enter(self, pre)
   quitButton.action = function() love.event.push('q') end
   self.menu:addButton(quitButton)
   
+  self.background = BackgroundParallax()
+  for i, background in ipairs(self.level.backgrounds) do
+    self.background:add(background)
+  end
+  
   music.title:setVolume(0.5)
   love.audio.play(music.title)
 end
@@ -99,23 +104,12 @@ function mainmenu.update(self, dt)
   self.level:update(dt)
   self.camera:update(dt)
   self.logo:update(dt)
+  self.background:setOffset(self.camera.offset)
 end
 
 function mainmenu.draw(self)
   -- Backgrounds
-  love.graphics.push()
-  love.graphics.scale(self.camera.scale)
-  
-  colors.white:set()
-  local overlayCount = #self.level.backgrounds
-  local maxOverlayMovement = 0.75
-  
-  for i, background in ipairs(self.level.backgrounds) do
-    love.graphics.push()
-    love.graphics.translate(-self.camera.offset.x * maxOverlayMovement / overlayCount * i, -self.camera.offset.y * maxOverlayMovement / overlayCount * i)
-    love.graphics.draw(background, 0, 0, 0, 4, 4)
-    love.graphics.pop()
-  end
+  self.background:draw()
 
   -- Level
   love.graphics.push()

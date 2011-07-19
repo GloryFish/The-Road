@@ -14,6 +14,7 @@ require 'vector'
 require 'textfader'
 require 'colors'
 require 'fader'
+require 'background_parallax'
 
 game = Gamestate.new()
 game.level = nil
@@ -45,6 +46,11 @@ function game.enter(self, pre)
   self.attemptElapsed = 0 -- Total time taken for the current attempt, resets to zero on death or reset()
   
   self.timer = require 'timer'
+
+  self.background = BackgroundParallax()
+  for i, background in ipairs(self.level.backgrounds) do
+    self.background:add(background)
+  end
 end
 
 function game.reset(self)
@@ -265,18 +271,11 @@ function game.update(self, dt)
   end
   self.camera:update(dt)
   
+  self.background:setOffset(self.camera.offset)
 end
 
 function game.draw(self)
-  local overlayCount = #self.level.backgrounds
-  local maxOverlayMovement = 0.75
-  
-  for i, background in ipairs(self.level.backgrounds) do
-    love.graphics.push()
-    love.graphics.translate(-self.camera.offset.x * maxOverlayMovement / overlayCount * i, -self.camera.offset.y * maxOverlayMovement / overlayCount * i)
-    love.graphics.draw(background, 0, 0, 0, 4, 4)
-    love.graphics.pop()
-  end
+  self.background:draw()
   
   love.graphics.push()
 
