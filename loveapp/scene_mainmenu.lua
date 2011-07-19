@@ -34,6 +34,7 @@ function mainmenu.enter(self, pre)
     left = 0 - 1000
   }
   self.camera.position = vector(325, 300)
+  self.camera.focus = vector(325, 300)
   self.camera:update(0)
   
   self.menu = Menu(vector(love.graphics.getWidth() / 2, 300))
@@ -71,6 +72,17 @@ function mainmenu.enter(self, pre)
   
   music.title:setVolume(0.5)
   love.audio.play(music.title)
+  
+  self.timer = require 'timer'
+  self.cameraMover = self.timer.Oscillator(60, function(frac)
+    if frac < 0.5 then
+      frac = frac * 2
+    else
+      frac = 1 - (frac - 0.5) * 2
+    end
+  
+    self.camera.position.x = 320 + (3260 * frac)
+  end)
 end
 
 function mainmenu.mousepressed(self, x, y, button)
@@ -102,6 +114,7 @@ function mainmenu.update(self, dt)
     self.log:addLine(string.format('FPS: %s', tostring(love.timer.getFPS())))
   end
   self.level:update(dt)
+  self.cameraMover(dt)
   self.camera:update(dt)
   self.logo:update(dt)
   self.background:setOffset(self.camera.offset)
