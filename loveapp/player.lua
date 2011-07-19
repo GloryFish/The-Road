@@ -123,7 +123,9 @@ function Player:jump()
   self.velocity = self.velocity + self.jumpVector
   self.onground = false
   self:setAnimation('jumping')
-  love.audio.play(self.sounds.jump)
+  if soundOn then
+    love.audio.play(self.sounds.jump)
+  end
 end
 
 function Player:wallslide()
@@ -135,7 +137,9 @@ function Player:land()
   self.onground = true
   self.onwall = false
   self:setAnimation('standing')
-  love.audio.play(self.sounds.land)
+  if soundOn then
+    love.audio.play(self.sounds.land)
+  end
 end
 
 -- TODO: Fix state code, make sure proper state transitions are maintained

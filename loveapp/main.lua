@@ -47,6 +47,8 @@ function love.load()
   
   input = Input()
   
+  soundOn = false
+  
   Gamestate.registerEvents()
   Gamestate.switch(mainmenu)
 end

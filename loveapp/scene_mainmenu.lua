@@ -69,9 +69,11 @@ function mainmenu.enter(self, pre)
   for i, background in ipairs(self.level.backgrounds) do
     self.background:add(background)
   end
-  
-  music.title:setVolume(0.5)
-  love.audio.play(music.title)
+
+  if soundOn then
+    music.title:setVolume(0.5)
+    love.audio.play(music.title)
+  end
   
   self.timer = require 'timer'
   self.cameraMover = self.timer.Oscillator(60, function(frac)
