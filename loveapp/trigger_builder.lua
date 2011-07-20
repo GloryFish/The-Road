@@ -13,6 +13,14 @@ TriggerBuilder = class('TriggerBuilder')
 function TriggerBuilder:initialize()
 end
 
+function TriggerBuilder:add(triggers, x, y, startTime)
+  local trigger = {
+    position = vector(x, y) + vector(-1, -1),
+    time = startTime
+  }
+  table.insert(triggers, trigger)
+end
+
 function TriggerBuilder:row(triggers, startX, endX, y, startTime, interval)
   local time = startTime
 

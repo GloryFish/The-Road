@@ -101,6 +101,10 @@ function game.mousereleased(self, x, y, button)
 end
 
 function game.update(self, dt)
+  if dt > 0.04 then
+    dt = 0.04
+  end
+  
   self.attemptElapsed = self.attemptElapsed + dt
   if debug then
     self.log:update(dt)
