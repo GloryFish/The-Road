@@ -108,6 +108,8 @@ tb:column(triggers, 20, 19, 7, 2.6, 0.5)
 tb:row(triggers, 21, 29, 15, 10, .2)
 tb:row(triggers, 21, 29, 16, 10, .2)
 
+tb:row(triggers, 32, 44, 10, 14, .7)
+
 
 -- tb:column(triggers, 18, 22, 5, 7, 0.15)
 
