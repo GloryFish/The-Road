@@ -10,6 +10,7 @@
 require 'middleclass'
 require 'colors'
 require 'vector'
+require 'debris'
 
 Block = class('Block')
 function Block:initialize(pos, size, scale, delay, char)
@@ -23,6 +24,9 @@ function Block:initialize(pos, size, scale, delay, char)
     self.activatingDuration = 3
   end
   self.char = char
+  self.debris = Debris()
+  self.debris.position = vector(self.position.x + self.size / 2 * self.scale, self.position.y + self.size / 2 * self.scale)
+  self.debris:start()
 end
 
 function Block:containsPoint(point)
@@ -76,6 +80,9 @@ function BlockManager:update(dt)
       block.activatingDuration = block.activatingDuration - dt
       if block.activatingDuration < 0 then
         block.state = 'active'
+        block.debris:stop()
+      else
+        block.debris:update(dt)
       end
     end
 
@@ -137,6 +144,9 @@ function BlockManager:draw()
                         0,
                         self.scale,
                         self.scale)
+    if block.state == 'activating' then
+      block.debris:draw()
+    end
   end
 end
 
