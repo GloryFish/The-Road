@@ -39,18 +39,18 @@ function mainmenu.enter(self, pre)
   
   self.menu = Menu(vector(love.graphics.getWidth() / 2, 300))
   
-  local startButton = TextButton('Test')
-  startButton.action = self.runTestLevel
-  self.menu:addButton(startButton)
+  local newGameButton = TextButton('New Game')
+  newGameButton.action = self.newGame
+  self.menu:addButton(newGameButton)
 
-	local paulsLevelButton = TextButton("Paul's Level")
-  paulsLevelButton.action = function()
+	local levelSelectButton = TextButton("Level Select")
+  levelSelectButton.action = function()
     debug = true
     game.level = Level('paul')
     Gamestate.switch(game)
   end
   
-  self.menu:addButton(paulsLevelButton)
+  self.menu:addButton(levelSelectButton)
 
   local quitButton = TextButton('Quit')
   quitButton.action = function() love.event.push('q') end
@@ -162,7 +162,7 @@ function mainmenu.draw(self)
   end
 end
 
-function mainmenu.runTestLevel(self)
+function mainmenu.newGame(self)
   debug = true
   game.level = Level('tower')
   Gamestate.switch(game)
