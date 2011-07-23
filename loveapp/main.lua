@@ -29,7 +29,7 @@ function love.load()
   fonts = {
     default        = love.graphics.newFont('resources/fonts/silkscreen.ttf', 24),
     small          = love.graphics.newFont('resources/fonts/silkscreen.ttf', 20),
-    tiny           = love.graphics.newFont('resources/fonts/silkscreen.ttf', 14),
+    tiny           = love.graphics.newFont('resources/fonts/gamegirl.ttf', 14),
     button         = love.graphics.newFont('resources/fonts/gamegirl.ttf', 18),
     buttonSelected = love.graphics.newFont('resources/fonts/gamegirl.ttf', 20),
     gamegirl       = love.graphics.newFont('resources/fonts/gamegirl.ttf', 18), -- http://www.fontspace.com/freaky-fonts/gamegirl-classic
@@ -47,7 +47,8 @@ function love.load()
   
   input = Input()
   
-  soundOn = false
+  soundOn = true
+  love.audio.setVolume(1)
   
   Gamestate.registerEvents()
   Gamestate.switch(mainmenu)

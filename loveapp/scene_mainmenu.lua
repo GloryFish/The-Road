@@ -100,6 +100,16 @@ function mainmenu.mousereleased(self, x, y, button)
   self.menu:mousereleased(vector(x, y))
 end
 
+function mainmenu.keypressed(self, key, unicode)
+  if debug and key == 's' then
+    if love.audio.getVolume() == 1 then
+      love.audio.setVolume(0)
+    else
+      love.audio.setVolume(1)
+    end
+  end
+end
+
 function mainmenu.update(self, dt)
   if debug then
     self.log:update(dt)
@@ -130,6 +140,18 @@ function mainmenu.draw(self)
   self.menu:draw()
   
   self.logo:draw()
+  
+  local soundStatus = 'ON'
+  if love.audio.getVolume() == 0 then
+    soundStatus = 'OFF'
+  end
+  
+  local soundPrompt = string.format('(S) toggle sound: %s', soundStatus)
+  love.graphics.setFont(fonts.tiny)
+  colors.darkest:set()
+  love.graphics.print(soundPrompt, 31, 446)
+  colors.lightest:set()
+  love.graphics.print(soundPrompt, 30, 445)
   
   if debug then
     self.log:draw()
