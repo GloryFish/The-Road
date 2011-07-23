@@ -48,12 +48,19 @@ function Menu:update(dt)
     if self.selectedIndex == 0 then
       self.selectedIndex = #self.buttons
     end
+    if soundOn then
+      love.audio.play(sounds.menumove)
+    end
   end
 
   if input.state.buttons.newpress.down then
     self.selectedIndex = self.selectedIndex + 1
     if self.selectedIndex > #self.buttons then
       self.selectedIndex = 1
+    end
+    
+    if soundOn then
+      love.audio.play(sounds.menumove)
     end
   end
 

@@ -42,7 +42,8 @@ function love.load()
   
   
   sounds = {
-    menuselect = love.audio.newSource('resources/sounds/select.mp3', 'static')
+    menumove = love.audio.newSource('resources/sounds/menu_move.mp3', 'static'),
+    menuselect = love.audio.newSource('resources/sounds/menu_select.mp3', 'static')
   }
   
   input = Input()
