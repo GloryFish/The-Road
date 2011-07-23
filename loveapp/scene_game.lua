@@ -128,6 +128,7 @@ function game.update(self, dt)
     self.log:addLine(string.format('World: %i, %i', mouse.x, mouse.y))
     self.log:addLine(string.format('Tile: %i, %i, %s', tile.x, tile.y, tileString))
     self.log:addLine(string.format('State: %s', self.player.animation.current))
+    self.log:addLine(string.format('Active: %i', #self.level.blockManager.blocks))
 
     -- self.log:addLine(string.format('Width: %i Height: %i', self.level:getWidth(), self.level:getHeight()))
 
