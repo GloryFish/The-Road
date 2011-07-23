@@ -43,10 +43,19 @@ function mainmenu.enter(self, pre)
   startButton.action = self.runTestLevel
   self.menu:addButton(startButton)
 
-	local paulsLevelButton = TextButton("Paul's Level")
+	local bequickButton = TextButton("Be Quick About It")
+  bequickButton.action = function()
+    debug = true
+    game.level = Level('bequickaboutit')
+    Gamestate.switch(game)
+  end
+
+	self.menu:addButton(bequickButton)
+
+	local paulsLevelButton = TextButton("The Gauntlet")
   paulsLevelButton.action = function()
     debug = true
-    game.level = Level('paul')
+    game.level = Level('gaunlet')
     Gamestate.switch(game)
   end
   
