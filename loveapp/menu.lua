@@ -15,21 +15,50 @@ function Menu:initialize(pos)
   self.buttons = {}
   self.visible = true
   self.padding = 35
+  self.selectedIndex = 1
 end
 
 function Menu:mousepressed(pos)
-  if self.visible then
-    for i, button in ipairs(self.buttons) do
-      button:mousepressed(pos)
-    end
-  end
+  return
+  -- These menus will be keyboard controlled
+  -- if self.visible then
+  --   for i, button in ipairs(self.buttons) do
+  --     button:mousepressed(pos)
+  --   end
+  -- end
 end
 
 function Menu:mousereleased(pos)
-  if self.visible then
-    for i, button in ipairs(self.buttons) do
-      button:mousereleased(pos)
+  return
+  -- These menus will be keyboard controlled
+  -- if self.visible then
+  --   for i, button in ipairs(self.buttons) do
+  --     button:mousereleased(pos)
+  --   end
+  -- end
+end
+
+function Menu:keypressed(key, unicode)
+
+end
+
+function Menu:update(dt)
+  if input.state.buttons.newpress.up then
+    self.selectedIndex = self.selectedIndex - 1
+    if self.selectedIndex == 0 then
+      self.selectedIndex = #self.buttons
     end
+  end
+
+  if input.state.buttons.newpress.down then
+    self.selectedIndex = self.selectedIndex + 1
+    if self.selectedIndex > #self.buttons then
+      self.selectedIndex = 1
+    end
+  end
+
+  if input.state.buttons.newpress.select then
+    self.buttons[self.selectedIndex]:runAction()
   end
 end
 
@@ -49,6 +78,11 @@ end
 function Menu:draw()
   if self.visible then
     for i, button in ipairs(self.buttons) do
+      if i == self.selectedIndex then
+        button.selected = true
+      else
+        button.selected = false
+      end
       button:draw()
     end
   end

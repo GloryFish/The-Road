@@ -13,6 +13,9 @@ require 'colors'
 TextButton = class('TextButton')
 
 function TextButton:initialize(text)
+  self.icon = love.graphics.newImage('resources/images/menuicon.png')
+  self.icon:setFilter('nearest', 'nearest')
+  
   self.position = vector(0, 0)
   self.text = text
   self.color = colors.lightest
@@ -38,7 +41,13 @@ function TextButton:mousereleased(pos)
   self.mousePos = pos
   self.selected = false
 
-  if self:containsPosition(pos) and self.action ~= nil then
+  if self:containsPosition(pos) then
+    self:runAction()
+  end
+end
+
+function TextButton:runAction()
+  if self.action ~= nil then
     if soundOn then
       love.audio.play(sounds.menuselect)
     end
@@ -82,4 +91,7 @@ function TextButton:draw()
                       self.position.x - lineWidth / 2, 
                       self.position.y)
 
+  if self.selected then
+    love.graphics.draw(self.icon, self.position.x - (lineWidth / 2) - 34, self.position.y, 0, 2, 2)
+  end
 end

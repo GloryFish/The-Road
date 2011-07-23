@@ -101,6 +101,8 @@ function mainmenu.mousereleased(self, x, y, button)
 end
 
 function mainmenu.keypressed(self, key, unicode)
+  self.menu:keypressed(key, unicode)
+  
   if debug and key == 's' then
     if love.audio.getVolume() == 1 then
       love.audio.setVolume(0)
@@ -116,6 +118,8 @@ function mainmenu.update(self, dt)
     self.log:addLine(string.format('Camera: %s', tostring(self.camera.position)))
     self.log:addLine(string.format('FPS: %s', tostring(love.timer.getFPS())))
   end
+  input:update(dt)
+  self.menu:update(dt)
   self.level:update(dt)
   self.cameraMover(dt)
   self.camera:update(dt)
