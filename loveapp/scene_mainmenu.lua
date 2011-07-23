@@ -111,6 +111,9 @@ end
 
 function mainmenu.keypressed(self, key, unicode)
   self.menu:keypressed(key, unicode)
+  if key == 'escape' then
+    love.event.push('q')
+  end
   
   if debug and key == 's' then
     if love.audio.getVolume() == 1 then
