@@ -40,11 +40,12 @@ function mainmenu.enter(self, pre)
       bottom = math.max(self.level:getHeight()  + 1000, love.graphics.getHeight()),
       left = 0 - 1000
     }
-    self.camera.position = vector(325, 300)
-    self.camera.focus = vector(325, 300)
-    self.camera.deadzone = 5
-    self.camera:update(0)
   end    
+
+  self.camera.position = vector(325, 300)
+  self.camera.focus = vector(325, 300)
+  self.camera.deadzone = 5
+  self.camera:update(0)
   
   -- Main Mneu
   self.menuMain = Menu(vector(320, 300))
@@ -57,22 +58,6 @@ function mainmenu.enter(self, pre)
     end)
   end
   self.menuMain:addButton(levelSelectButton)
-
-	local bequickButton = TextButton("Be Quick About It")
-  bequickButton.action = function()
-    game.level = Level('bequickaboutit')
-    Gamestate.switch(game)
-  end
-
-	self.menuMain:addButton(bequickButton)
-
-	local paulsLevelButton = TextButton("The Gauntlet")
-  paulsLevelButton.action = function()
-    game.level = Level('gaunlet')
-    Gamestate.switch(game)
-  end
-  
-  self.menuMain:addButton(paulsLevelButton)
 
   local quitButton = TextButton('Quit')
   quitButton.action = function() love.event.push('q') end
@@ -89,6 +74,18 @@ function mainmenu.enter(self, pre)
     end)
   end
   self.menuLevel:addButton(backButton)
+
+  local levels = love.filesystem.enumerate('resources/maps/')
+  for i, levelName in ipairs(levels) do
+    levelName = string.sub(levelName, 1, -5)
+
+    local button = TextButton(levelName)
+    button.action = function()
+      game.level = Level(levelName)
+      Gamestate.switch(game)
+    end
+    self.menuLevel:addButton(button)
+  end
 
   self.menuActive = self.menuMain
   
@@ -188,13 +185,6 @@ function mainmenu.draw(self)
     self.log:draw()
   end
 end
-
-function mainmenu.runTestLevel(self)
-  debug = true
-  game.level = Level('tower')
-  Gamestate.switch(game)
-end
-
 
 function mainmenu.leave(self)
   
