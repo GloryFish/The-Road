@@ -129,7 +129,7 @@ function mainmenu.keypressed(self, key, unicode)
     love.event.push('q')
   end
   
-  if debug and key == 's' then
+  if debug and key == 't' then
     if love.audio.getVolume() == 1 then
       love.audio.setVolume(0)
     else
@@ -172,7 +172,7 @@ function mainmenu.draw(self)
     soundStatus = 'OFF'
   end
   
-  local soundPrompt = string.format('(S) toggle sound: %s', soundStatus)
+  local soundPrompt = string.format('(T)oggle sound: %s', soundStatus)
   love.graphics.setFont(fonts.tiny)
   colors.darkest:set()
   love.graphics.print(soundPrompt, 31, 446)
