@@ -12,6 +12,7 @@ require 'textbutton'
 require 'level'
 require 'camera'
 require 'scene_game'
+require 'scene_levelselect'
 require 'logo'
 
 mainmenu = Gamestate.new()
@@ -20,50 +21,76 @@ function mainmenu.enter(self, pre)
   self.log = Logger(vector(10, 10))
   self.log.color = colors.white
   
+  self.timer = require 'timer'
+  
   self.level = Level('mainmenu')
   
   self.logo = Logo('resources/images/logo.png')
   self.logo.position = vector(110, 50)
   self.logo:fadeIn()
   
-  self.camera = Camera()
-  self.camera.bounds = {
-    top = 0 - 1000,
-    right = math.max(self.level:getWidth() + 1000, love.graphics.getWidth()),
-    bottom = math.max(self.level:getHeight()  + 1000, love.graphics.getHeight()),
-    left = 0 - 1000
-  }
-  self.camera.position = vector(325, 300)
-  self.camera.focus = vector(325, 300)
-  self.camera:update(0)
+  self.mainPosition = vector(325, 300) 
+  self.levelSelectPosition = vector(850, 300) 
   
-  self.menu = Menu(vector(love.graphics.getWidth() / 2, 300))
+  if self.camera == nil then
+    self.camera = Camera()
+    self.camera.bounds = {
+      top = 0 - 1000,
+      right = math.max(self.level:getWidth() + 1000, love.graphics.getWidth()),
+      bottom = math.max(self.level:getHeight()  + 1000, love.graphics.getHeight()),
+      left = 0 - 1000
+    }
+    self.camera.position = vector(325, 300)
+    self.camera.focus = vector(325, 300)
+    self.camera.deadzone = 5
+    self.camera:update(0)
+  end    
   
-  local startButton = TextButton('Test')
-  startButton.action = self.runTestLevel
-  self.menu:addButton(startButton)
+  -- Main Mneu
+  self.menuMain = Menu(vector(320, 300))
+  
+  local levelSelectButton = TextButton('Level Select')
+  levelSelectButton.action = function()
+    self.camera.focus.x = self.levelSelectPosition.x
+    self.timer.add(0.1, function()
+      self.menuActive = self.menuLevel
+    end)
+  end
+  self.menuMain:addButton(levelSelectButton)
 
 	local bequickButton = TextButton("Be Quick About It")
   bequickButton.action = function()
-    debug = true
     game.level = Level('bequickaboutit')
     Gamestate.switch(game)
   end
 
-	self.menu:addButton(bequickButton)
+	self.menuMain:addButton(bequickButton)
 
 	local paulsLevelButton = TextButton("The Gauntlet")
   paulsLevelButton.action = function()
-    debug = true
     game.level = Level('gaunlet')
     Gamestate.switch(game)
   end
   
-  self.menu:addButton(paulsLevelButton)
+  self.menuMain:addButton(paulsLevelButton)
 
   local quitButton = TextButton('Quit')
   quitButton.action = function() love.event.push('q') end
-  self.menu:addButton(quitButton)
+  self.menuMain:addButton(quitButton)
+
+  -- Level Select Menu
+  self.menuLevel = Menu(vector(self.levelSelectPosition.x, 100))
+  
+  local backButton = TextButton('Back')
+  backButton.action = function()
+    self.camera.focus.x = self.mainPosition.x
+    self.timer.add(0.1, function()
+      self.menuActive = self.menuMain
+    end)
+  end
+  self.menuLevel:addButton(backButton)
+
+  self.menuActive = self.menuMain
   
   self.background = BackgroundParallax(vector(self.level:getWidth(), self.level:getHeight()))
   for i, background in ipairs(self.level.backgrounds) do
@@ -74,21 +101,10 @@ function mainmenu.enter(self, pre)
     music.title:setVolume(0.5)
     love.audio.play(music.title)
   end
-  
-  self.timer = require 'timer'
-  self.cameraMover = self.timer.Oscillator(60, function(frac)
-    if frac < 0.5 then
-      frac = frac * 2
-    else
-      frac = 1 - (frac - 0.5) * 2
-    end
-  
-    self.camera.position.x = 320 + (3260 * frac)
-  end)
 end
 
 function mainmenu.mousepressed(self, x, y, button)
-  self.menu:mousepressed(vector(x, y))
+  self.menuActive:mousepressed(vector(x, y))
 
   if debug and button == 'r' then
     local mouse = vector(love.mouse.getX(), love.mouse.getY()) + self.camera.offset
@@ -106,11 +122,12 @@ function mainmenu.mousepressed(self, x, y, button)
 end
 
 function mainmenu.mousereleased(self, x, y, button)
-  self.menu:mousereleased(vector(x, y))
+  self.menuActive:mousereleased(vector(x, y))
 end
 
 function mainmenu.keypressed(self, key, unicode)
-  self.menu:keypressed(key, unicode)
+  self.menuActive:keypressed(key, unicode)
+
   if key == 'escape' then
     love.event.push('q')
   end
@@ -127,13 +144,13 @@ end
 function mainmenu.update(self, dt)
   if debug then
     self.log:update(dt)
-    self.log:addLine(string.format('Camera: %s', tostring(self.camera.position)))
+    self.log:addLine(string.format('Camera: %i, %i', self.camera.position.x, self.camera.position.y))
     self.log:addLine(string.format('FPS: %s', tostring(love.timer.getFPS())))
   end
+  
   input:update(dt)
-  self.menu:update(dt)
+  self.menuActive:update(dt)
   self.level:update(dt)
-  self.cameraMover(dt)
   self.camera:update(dt)
   self.logo:update(dt)
   self.background:setOffset(self.camera.offset)
@@ -147,16 +164,12 @@ function mainmenu.draw(self)
   love.graphics.push()
   love.graphics.translate(-self.camera.offset.x, -self.camera.offset.y)
   self.level:draw()
-  love.graphics.pop()
 
-  love.graphics.pop()
-  
-  love.graphics.translate(0, 0)  
-
-  self.menu:draw()
+  self.menuMain:draw()
+  self.menuLevel:draw()
   
   self.logo:draw()
-  
+
   local soundStatus = 'ON'
   if love.audio.getVolume() == 0 then
     soundStatus = 'OFF'
@@ -168,6 +181,8 @@ function mainmenu.draw(self)
   love.graphics.print(soundPrompt, 31, 446)
   colors.lightest:set()
   love.graphics.print(soundPrompt, 30, 445)
+
+  love.graphics.pop()
   
   if debug then
     self.log:draw()
