@@ -12,7 +12,6 @@ require 'textbutton'
 require 'level'
 require 'camera'
 require 'scene_game'
-require 'scene_levelselect'
 require 'logo'
 
 mainmenu = Gamestate.new()
