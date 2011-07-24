@@ -30,6 +30,7 @@ function mainmenu.enter(self, pre)
   
   self.mainPosition = vector(325, 300) 
   self.levelSelectPosition = vector(850, 300) 
+  self.instructionsPosition = vector(1375, 300) 
   
   if self.camera == nil then
     self.camera = Camera()
@@ -57,6 +58,15 @@ function mainmenu.enter(self, pre)
     end)
   end
   self.menuMain:addButton(levelSelectButton)
+
+  local instructionsButton = TextButton('Instructions')
+  instructionsButton.action = function()
+    self.camera.focus.x = self.instructionsPosition.x
+    self.timer.add(0.1, function()
+      self.menuActive = self.menuInstructions
+    end)
+  end
+  self.menuMain:addButton(instructionsButton)
 
   local quitButton = TextButton('Quit')
   quitButton.action = function() love.event.push('q') end
@@ -86,6 +96,18 @@ function mainmenu.enter(self, pre)
     self.menuLevel:addButton(button)
   end
 
+  -- Instructions menu
+  self.menuInstructions = Menu(vector(self.instructionsPosition.x, 400))
+  
+  local instBackButton = TextButton('Back')
+  instBackButton.action = function()
+    self.camera.focus.x = self.mainPosition.x
+    self.timer.add(0.1, function()
+      self.menuActive = self.menuMain
+    end)
+  end
+  self.menuInstructions:addButton(instBackButton)
+  
   self.menuActive = self.menuMain
   
   self.background = BackgroundParallax(vector(self.level:getWidth(), self.level:getHeight()))
@@ -163,6 +185,7 @@ function mainmenu.draw(self)
 
   self.menuMain:draw()
   self.menuLevel:draw()
+  self.menuInstructions:draw()
   
   self.logo:draw()
 
