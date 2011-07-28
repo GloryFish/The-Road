@@ -1,5 +1,5 @@
 -- 
---  paul.lua
+--  gauntlet.lua
 --  The-Road
 --  Paul rules.
 --  Created by Jay Roberts on 2011-07-16.
@@ -263,4 +263,4 @@ tb:row(triggers, 43, 66, 1, 54, 1)
 
 local gravity = vector(0, 600)
 
-return tileset, quads, tileString, tileWidth, gravity, solid, triggers, backgrounds, 'bequickaboutit'
+return tileset, quads, tileString, tileWidth, gravity, solid, triggers, backgrounds, 'tower'
