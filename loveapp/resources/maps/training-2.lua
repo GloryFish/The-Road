@@ -1,5 +1,5 @@
 -- 
---  training-1.lua
+--  training-2.lua
 --  The-Road
 --
 --  Created by Jay Roberts on 2011-07-16.
@@ -63,9 +63,9 @@ local tileString = [[
 #                  #
 #                  #
 #                  #
-#                  #
-#               G  #
-#------------------#
+#        -         #
+#       ###     G  #
+#------#####-------#
 ####################
 ####            ####
 ###              ###
@@ -87,8 +87,8 @@ tb:row(triggers, 2, 3, 19, 2.1, 0)
 tb:row(triggers, 2, 4, 18, 2.6, 0)
 
 -- Main platform
-tb:row(triggers, 2, 19, 17, 3, 0.6)
-tb:row(triggers, 2, 19, 16, 6, 0.3)
+tb:row(triggers, 2, 19, 17, 3, 0.4)
+tb:row(triggers, 2, 19, 16, 5, 0.3)
 
 
 -- Right side support
@@ -98,4 +98,4 @@ tb:column(triggers, 19, 20, 18, 10, 0.5)
 
 local gravity = vector(0, 600)
 
-return tileset, quads, tileString, tileWidth, gravity, solid, triggers, backgrounds, 'training-2'
+return tileset, quads, tileString, tileWidth, gravity, solid, triggers, backgrounds, 'training-3'
