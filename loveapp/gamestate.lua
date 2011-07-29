@@ -67,7 +67,7 @@ end
 
 local _keypressed
 function Gamestate.keypressed(key, unicode)
-	if _keypressed then _keyreleased(key) end
+	if _keypressed then _keypressed(key) end
 	Gamestate.current:keypressed(key, unicode)
 end
 
