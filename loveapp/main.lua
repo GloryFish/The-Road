@@ -16,10 +16,13 @@ require 'scene_game'
 require 'input'
 require 'logger'
 
+unlocked = {'item'}
+
 function love.load()
   debug = true
   
   love.graphics.setCaption('The Road')
+  love.filesystem.setIdentity('The Road')
   
   -- Seed random
   local seed = os.time()
@@ -43,7 +46,8 @@ function love.load()
   
   sounds = {
     menumove = love.audio.newSource('resources/sounds/menu_move.mp3', 'static'),
-    menuselect = love.audio.newSource('resources/sounds/menu_select.mp3', 'static')
+    menuselect = love.audio.newSource('resources/sounds/menu_select.mp3', 'static'),
+    crumble = love.audio.newSource('resources/sounds/crumble_1.mp3', 'static'),
   }
   
   input = Input()
@@ -53,7 +57,23 @@ function love.load()
   
   Gamestate.registerEvents()
   Gamestate.switch(mainmenu)
+
+  unlocked = {'jimmy'}
+  
+  
+  -- if love.filesystem.isFile('levels.txt') then
+  --   unlocked = love.filesystem.lines('levels.txt')
+  --   
+  --   unlocked = {'arga'}
+  -- else
+  --   local file = love.filesystem.newFile("levels.txt")
+  --   file:open('w')
+  --   file:write('training-1\n')
+  --   file:close()
+  --   unlocked = {'training-1'}
+  -- end
 end
+
 
 function love.update(dt)
 end

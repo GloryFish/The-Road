@@ -85,9 +85,20 @@ function mainmenu.enter(self, pre)
   self.menuLevel:addButton(backButton)
 
   local levels = love.filesystem.enumerate('resources/maps/')
-  for i, levelName in ipairs(levels) do
-    levelName = string.sub(levelName, 1, -5)
+  -- for i, levelName in ipairs(levels) do
+  --   levelName = string.sub(levelName, 1, -5)
+  -- 
+  --   if table.contains(unlockedLevels, levelName) then
+  --     local button = TextButton(levelName)
+  --     button.action = function()
+  --       game.level = Level(levelName)
+  --       Gamestate.switch(game)
+  --     end
+  --     self.menuLevel:addButton(button)
+  --   end
+  -- end
 
+  for i, levelName in ipairs(unlocked) do
     local button = TextButton(levelName)
     button.action = function()
       game.level = Level(levelName)
@@ -95,6 +106,7 @@ function mainmenu.enter(self, pre)
     end
     self.menuLevel:addButton(button)
   end
+
 
   -- Instructions menu
   self.menuInstructions = Menu(vector(self.instructionsPosition.x, 400))
