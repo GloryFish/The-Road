@@ -49,6 +49,14 @@ function mainmenu.enter(self, pre)
   
   -- Main Mneu
   self.menuMain = Menu(vector(320, 300))
+
+  local newGameButton = TextButton('New Game')
+  newGameButton.action = function()
+    game.level = Level('training-1')
+    Gamestate.switch(game)
+  end
+  self.menuMain:addButton(newGameButton)
+
   
   local levelSelectButton = TextButton('Level Select')
   levelSelectButton.action = function()
