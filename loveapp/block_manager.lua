@@ -79,6 +79,9 @@ function BlockManager:update(dt)
     if block.state == 'activating' then
       block.activatingDuration = block.activatingDuration - dt
       if block.activatingDuration < 0 then
+        if soundOn then
+          -- love.audio.play(sounds.crumble)
+        end
         block.state = 'active'
         block.debris:stop()
       else
