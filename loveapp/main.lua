@@ -16,7 +16,7 @@ require 'scene_game'
 require 'input'
 require 'logger'
 
-unlocked = {'item'}
+unlocked = {}
 
 function love.load()
   debug = true
@@ -54,26 +54,30 @@ function love.load()
   
   soundOn = true
   love.audio.setVolume(1)
+
+  if love.filesystem.isFile('levels.txt') then
+     for level in love.filesystem.lines('levels.txt') do
+       table.insert(unlocked, level)
+     end
+  else
+    local file = love.filesystem.newFile("levels.txt")
+    file:open('w')
+    file:write('training-1\n')
+    file:close()
+    table.insert(unlocked, 'training-1')
+  end
   
   Gamestate.registerEvents()
   Gamestate.switch(mainmenu)
-
-  unlocked = {'jimmy'}
-  
-  
-  -- if love.filesystem.isFile('levels.txt') then
-  --   unlocked = love.filesystem.lines('levels.txt')
-  --   
-  --   unlocked = {'arga'}
-  -- else
-  --   local file = love.filesystem.newFile("levels.txt")
-  --   file:open('w')
-  --   file:write('training-1\n')
-  --   file:close()
-  --   unlocked = {'training-1'}
-  -- end
 end
 
+function unlockLevel(name)
+  file = love.filesystem.newFile('levels.txt')
+  file:open('a')
+  file:write(name..'\n')
+  file:close()
+  table.insert(unlocked, name)
+end
 
 function love.update(dt)
 end

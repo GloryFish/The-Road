@@ -256,6 +256,7 @@ function game.update(self, dt)
   -- Check to see if player has fallen below the bounds
   if self.player.position.y > self.level:getHeight() then
     if self.goalReached then -- Next level!
+      unlockLevel(self.level.nextLevelName)
       -- Next level
       self.level = Level(self.level.nextLevelName)
       self:reset()
