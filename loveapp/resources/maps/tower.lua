@@ -71,9 +71,9 @@ local tileString = [[
 #############################
 #############################
 ###########       ###########
-########### S   G ###########
+########### S     ###########
 ###########       ###########
-###########       ###########
+###########     G ###########
 ###########       ###########
 ###########       ###########
 ###########       ###########
@@ -87,29 +87,52 @@ local tileString = [[
 #############################
 ]]
 
--- 12, 18
--- 19
+-- 12, 19
 
 local triggers = {}
 
 local tb = TriggerBuilder()
 
--- tb:add(triggers, 18, 19, 3)
+tb:add(triggers, 12, 19, 2)
+tb:add(triggers, 13, 19, 2)
+tb:add(triggers, 12, 18, 2)
+tb:add(triggers, 12, 17, 2)
 
-tb:row(triggers, 18, 12, 19, 3, 1.5)
-tb:row(triggers, 12, 18, 18, 9, 1.5)
-tb:row(triggers, 18, 12, 17, 13, 1.5)
-tb:row(triggers, 12, 18, 16, 15, 1.5)
-tb:row(triggers, 18, 12, 15, 16, 1.5)
+tb:add(triggers, 13, 18, 6)
+tb:add(triggers, 14, 18, 6)
+tb:add(triggers, 14, 19, 6)
+tb:add(triggers, 15, 19, 6)
 
-tb:column(triggers, 12, 14, 1, 17, 0.5)
-tb:column(triggers, 18, 14, 1, 18, 0.5)
+tb:add(triggers, 17, 19, 8)
+tb:add(triggers, 18, 19, 8)
+tb:add(triggers, 18, 18, 8)
+tb:add(triggers, 18, 17, 8)
 
-tb:row(triggers, 13, 17, 14, 22, 1.5)
-tb:row(triggers, 17, 13, 13, 25, 1)
-tb:row(triggers, 13, 17, 12, 27, 1)
-tb:row(triggers, 17, 13, 11, 30, 1)
-tb:row(triggers, 13, 17, 10, 32, 1)
+tb:add(triggers, 15, 18, 11)
+tb:add(triggers, 16, 18, 11)
+tb:add(triggers, 17, 18, 11)
+tb:add(triggers, 16, 19, 11)
+
+tb:row(triggers, 12, 18, 17, 13, 0.7)
+tb:row(triggers, 12, 18, 16, 16, 0.7)
+tb:row(triggers, 12, 18, 15, 19, 0.7)
+tb:row(triggers, 12, 18, 14, 21, 1)
+tb:row(triggers, 12, 18, 13, 25, 1)
+tb:row(triggers, 12, 18, 12, 28, 1.3)
+tb:row(triggers, 12, 18, 11, 32, 1.3)
+tb:row(triggers, 12, 18, 10, 35, 1.3)
+tb:row(triggers, 12, 18, 9, 38, 1.3)
+tb:row(triggers, 12, 18, 8, 42, 1.3)
+
+tb:column(triggers, 9, 34, 30, 15, 1.5)
+tb:column(triggers, 8, 34, 23, 15, 1.1)
+tb:column(triggers, 7, 34, 27, 15, 1.7)
+tb:column(triggers, 10, 34, 20, 25, 1.7)
+
+tb:column(triggers, 21, 34, 25, 25, 1.5)
+tb:column(triggers, 22, 34, 18, 25, 1.1)
+tb:column(triggers, 23, 34, 22, 25, 1.7)
+tb:column(triggers, 24, 34, 15, 35, 1.7)
 
 
 
