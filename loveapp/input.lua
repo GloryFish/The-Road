@@ -63,7 +63,7 @@ function Input:update(dt)
   end
   
   -- Get keyboard buttons
-  self.state.buttons.jump = love.keyboard.isDown('z')
+  self.state.buttons.jump = love.keyboard.isDown('z') or love.keyboard.isDown('w') or love.keyboard.isDown('up') or love.keyboard.isDown(' ')
   self.state.buttons.fire = love.keyboard.isDown('x')
   self.state.buttons.back = love.keyboard.isDown('escape')
   self.state.buttons.start = love.keyboard.isDown('return')
@@ -106,7 +106,7 @@ function Input:update(dt)
   end
   
   -- Add meta buttons
-  self.state.buttons.select = self.state.buttons.start or self.state.buttons.jump or self.state.buttons.fire
+  self.state.buttons.select = self.state.buttons.start or self.state.buttons.fire or love.keyboard.isDown('z') or love.keyboard.isDown(' ')
   self.state.buttons.cancel = self.state.buttons.back
   
   if self.controller.enabled then
