@@ -19,7 +19,7 @@ require 'logger'
 unlocked = {}
 
 function love.load()
-  debug = true
+  debug = false
   
   love.graphics.setCaption('The Road')
   love.filesystem.setIdentity('The Road')

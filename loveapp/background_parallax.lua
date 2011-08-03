@@ -44,6 +44,7 @@ function BackgroundParallax:setOffset(offset)
 end
 
 function BackgroundParallax:draw()
+  colors.white:set()
   local overlayCount = #self.images
   
   for i, image in ipairs(self.images) do
