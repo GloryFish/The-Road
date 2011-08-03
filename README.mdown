@@ -3,49 +3,37 @@
 A small game about how hard it is all the time.
 
 
-# Opening Titles?
+## Experimental Gameplay
 
-Congratulations! You made it to the top of the evil dragon's mountain lair.
+This game was created for the [Experimental Gameplay Project July 2011](http://experimentalgameplay.com/blog/2011/07/disintegrate-in-july/) challenge: DISINTEGRATE.
 
-It is unfortunate however, that the dragon ate the princess just as you crossed the threshold into his anti-chamber.
-
-Now the walls are collapsing.
-
-It seems apparent you should run...
-
+However, it is not an official submission because we took the whole month (not 7 days) to make the game and there were two of us working on it. But the theme was interesting and who needs a reason to make games?
 
 ## Goals
 
-To create a very small, simple game, in a small amount of time for the Experimental gameplay competition.
+Our goals were to:
 
-To hint at a deeper idea underlying the simple gameplay and art.
+1. Create a very small, simple game, in a small amount of time for the Experimental gameplay competition.
 
-To have at least one fun mechanic that encourages some amount of replay beyond a single attempt.
+2. Hint at a deeper idea underlying the simple gameplay and art.
 
-To have at least 5 levels created. This will probably take longer than expected.
+3. Have at least one fun mechanic that encourages some amount of replay beyond a single attempt.
 
-It would be interesting to implement this without text or numbers.
+4. Have at least 5 levels created. 
 
-## Gameplay
+## Credits
 
-The player controls a character who can run and jump on platforms. The levels are made up of solid boxes that float in the air. Over time, boxes become affected by gravity causing them to drop. Boxes can stack up, blocking passages. They can also drop out of the level completely creating pits.
+Art: [Paul Bredenberg](http://paulbredenberg.com/)
 
-The player's goal is to move quickly and skillfully through each level to get to a goal without falling out of the level.
+Programming: [Jay Roberts](http://gloryfish.org)
 
-The jumping physics should offer a lot of player control.
+Font: [Gamegirl Classic](http://www.fontspace.com/freaky-fonts/gamegirl-classic)
+
+Music: [Earth Crisis 2011](http://modarchive.org/index.php?request=view_by_moduleid&query=170449) by [JAM](http://modarchive.org/index.php?request=view_profile&query=81691)
 
 
-## Art
+Uses the excellent [LÖVE](http://love2d.org) framework.
 
-The art style should be very simple, possibly in a 4 color gameboy style. Tiles should be 16x16 or 32x32. The player sprite should be the same size.
+Uses kikito's elegant [Middleclass](https://github.com/kikito/middleclass)
 
-Required assets:
-
-- background tile
-- dormant block tile
-- active block tile
-- player standing sprite
-- player running sprite
-- player jumping sprite
-
-All player sprites should be facing right, they will be flipped in code.
+Uses vrld's _can't live without it_ [HUMP Library](https://github.com/vrld/hump)
