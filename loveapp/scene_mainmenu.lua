@@ -164,7 +164,7 @@ function mainmenu.keypressed(self, key, unicode)
     love.event.push('q')
   end
   
-  if debug and key == 't' then
+  if key == 't' then
     if love.audio.getVolume() == 1 then
       love.audio.setVolume(0)
     else
