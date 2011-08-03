@@ -203,6 +203,13 @@ function mainmenu.draw(self)
   
   self.logo:draw()
 
+  local instructions = "Use the Arrow keys or WSAD to move.\nPress Z to jump.\nDon't get crushed by falling blocks.\nDon't fall to your doom.\nDon't fear change.\nDon't worry that you'll never amount to anything.\nDon't.Stop."
+
+  colors.darkest:set()
+  love.graphics.printf(instructions, 1151, 101, 500)
+  colors.lightest:set()
+  love.graphics.printf(instructions, 1150, 100, 500)
+
   local soundStatus = 'ON'
   if love.audio.getVolume() == 0 then
     soundStatus = 'OFF'
