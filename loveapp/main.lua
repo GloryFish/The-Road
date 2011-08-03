@@ -61,9 +61,9 @@ function love.load()
   else
     local file = love.filesystem.newFile("levels.txt")
     file:open('w')
-    file:write('training-1\n')
+    file:write('1-walking\n')
     file:close()
-    table.insert(unlocked, 'training-1')
+    table.insert(unlocked, '1-walking')
   end
   
   Gamestate.registerEvents()

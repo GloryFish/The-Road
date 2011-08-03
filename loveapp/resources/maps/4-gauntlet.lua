@@ -263,4 +263,4 @@ tb:row(triggers, 43, 66, 1, 54, 1)
 
 local gravity = vector(0, 600)
 
-return tileset, quads, tileString, tileWidth, gravity, solid, triggers, backgrounds, 'tower'
+return tileset, quads, tileString, tileWidth, gravity, solid, triggers, backgrounds, '5-tower'

@@ -52,7 +52,7 @@ function mainmenu.enter(self, pre)
 
   local newGameButton = TextButton('New Game')
   newGameButton.action = function()
-    game.level = Level('training-1')
+    game.level = Level('1-walking')
     Gamestate.switch(game)
   end
   self.menuMain:addButton(newGameButton)
@@ -103,7 +103,7 @@ function mainmenu.enter(self, pre)
         Gamestate.switch(game)
       end
       self.menuLevel:addButton(button)
-    else
+    elseif levelName ~= 'mainmenu' then
       local button = TextButton('???')
       button.action = function() end
       self.menuLevel:addButton(button)

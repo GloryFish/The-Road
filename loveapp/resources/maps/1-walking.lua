@@ -1,5 +1,5 @@
 -- 
---  training-3.lua
+--  training-1.lua
 --  The-Road
 --
 --  Created by Jay Roberts on 2011-07-16.
@@ -62,7 +62,7 @@ local tileString = [[
 #                  #
 #                  #
 #                  #
-#     ########     #
+#                  #
 #                  #
 #               G  #
 #------------------#
@@ -81,12 +81,21 @@ local tb = TriggerBuilder()
 
 -- starting block, ending block, row, starting time from beginning of level, duration of activation
 
-tb:row(triggers, 16, 7, 16, 0, 0.3)
-tb:row(triggers, 16, 7, 17, 0, 0.2)
+-- Left side support
+tb:add(triggers, 2, 20, 1)
+tb:row(triggers, 2, 3, 19, 2.1, 0)
+tb:row(triggers, 2, 4, 18, 2.6, 0)
 
-tb:row(triggers, 3, 16, 4, 0, 0.3)
+-- Main platform
+tb:row(triggers, 2, 19, 17, 3, 0.6)
+tb:row(triggers, 2, 19, 16, 6, 0.3)
 
+
+-- Right side support
+tb:add(triggers, 17, 18, 9)
+tb:column(triggers, 18, 19, 18, 9.3, 0.5)
+tb:column(triggers, 19, 20, 18, 10, 0.5)
 
 local gravity = vector(0, 600)
 
-return tileset, quads, tileString, tileWidth, gravity, solid, triggers, backgrounds, 'gauntlet'
+return tileset, quads, tileString, tileWidth, gravity, solid, triggers, backgrounds, '2-jumping'

@@ -138,4 +138,4 @@ tb:column(triggers, 24, 34, 15, 35, 1.7)
 
 local gravity = vector(0, 600)
 
-return tileset, quads, tileString, tileWidth, gravity, solid, triggers, backgrounds, 'bequickaboutit'
+return tileset, quads, tileString, tileWidth, gravity, solid, triggers, backgrounds, '6-quickness'
