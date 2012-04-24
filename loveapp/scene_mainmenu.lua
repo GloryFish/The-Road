@@ -77,7 +77,7 @@ function mainmenu.enter(self, pre)
   self.menuMain:addButton(instructionsButton)
 
   local quitButton = TextButton('Quit')
-  quitButton.action = function() love.event.push('q') end
+  quitButton.action = function() love.event.push('quit') end
   self.menuMain:addButton(quitButton)
 
   -- Level Select Menu
@@ -161,7 +161,7 @@ function mainmenu.keypressed(self, key, unicode)
   self.menuActive:keypressed(key, unicode)
 
   if key == 'escape' then
-    love.event.push('q')
+    love.event.push('quit')
   end
   
   if key == 't' then
